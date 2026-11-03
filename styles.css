@@ -2211,3 +2211,194 @@ html:not(.js-ready) .menu-toggle {
     font-size: 12px;
   }
 }
+.hero {
+  padding-top: 28px;
+}
+.hero-copy {
+  padding-block: 24px;
+}
+.intro {
+  font-size: 17px;
+}
+.hero-signature {
+  margin-top: 35px;
+}
+.hero-bottom {
+  padding-top: 10px;
+}
+.scroll-cue {
+  width: 44px;
+  height: 44px;
+  justify-content: center;
+}
+.motion-toggle {
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 12px;
+}
+.drag-hint {
+  font-size: 11px;
+  letter-spacing: .03em;
+  text-transform: none;
+}
+.reset-view {
+  min-width: 44px;
+  min-height: 44px;
+  font-size: 24px;
+}
+.scene-controls {
+  bottom: 20px;
+}
+.school-section {
+  padding-block: 32px;
+  margin-top: 22px;
+}
+.school-name {
+  font-size: 26px;
+  margin-top: 0;
+}
+.section-heading {
+  margin-bottom: 34px;
+}
+.slide-copy {
+  justify-content: space-between;
+  padding-block: 36px;
+}
+.slide-copy h3 {
+  margin-top: auto;
+}
+.gallery-count {
+  font-size: 12px;
+}
+.gallery-tabs {
+  gap: 8px;
+}
+.gallery-tabs button {
+  width: 44px;
+  min-height: 40px;
+}
+.gallery-tabs button::after {
+  left: 10px;
+  right: 10px;
+  bottom: 16px;
+  transform: scaleX(1);
+  background: #6d849366;
+}
+.gallery-tabs button[aria-pressed=true]::after {
+  background: #b3cbe2;
+  transform: scaleX(1.25);
+}
+.image-disclosure {
+  font-size: 12px;
+  letter-spacing: 0;
+  margin-top: 16px;
+}
+.member {
+  display: block;
+  min-height: 100px;
+  padding-block: 28px;
+}
+.team-list {
+  margin-top: 30px;
+}
+.team-section {
+  padding-bottom: 65px;
+}
+.footer {
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+}
+.footer small {
+  font-size: 12px;
+}
+.footer a {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+}
+@media (max-width:850px) {
+  .school-name {
+    font-size: 23px;
+  }
+  .slide-copy {
+    padding-block: 28px;
+  }
+}
+@media (max-width:640px) {
+  .hero-copy {
+    padding-top: 22px;
+  }
+  .hero-signature {
+    margin-top: 26px;
+  }
+  .hero-bottom {
+    flex-wrap: nowrap;
+  }
+  .scene-controls {
+    bottom: 8px;
+  }
+  .school-section {
+    gap: 18px;
+    margin-top: 8px;
+    padding-block: 26px;
+  }
+  .school-name {
+    font-size: 21px;
+  }
+  .slide-copy {
+    min-height: 125px;
+    padding: 28px 23px;
+  }
+  .slide-copy h3 {
+    padding-right: 50px;
+  }
+  .slide-number {
+    font-size: 40px;
+  }
+  .gallery-tabs {
+    width: auto;
+    order: 2;
+    margin-top: 0;
+    gap: 0;
+  }
+  .gallery-tabs button {
+    flex: none;
+    width: 34px;
+  }
+  .gallery-tabs button::after {
+    left: 8px;
+    right: 8px;
+  }
+  .gallery-arrows {
+    order: 3;
+  }
+  .gallery-controls {
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+  .image-disclosure {
+    font-size: 11px;
+  }
+  .member {
+    min-height: 78px;
+    padding-block: 24px;
+  }
+  .team-section {
+    padding-bottom: 44px;
+  }
+  .presentation-mode .slide-copy {
+    min-height: 125px;
+  }
+}
+@media (max-width: 360px) {
+  .gallery-tabs button {
+    width: 26px;
+  }
+  .gallery-tabs button::after {
+    left: 7px;
+    right: 7px;
+  }
+}

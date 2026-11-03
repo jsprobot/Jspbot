@@ -1,15 +1,13 @@
-<!doctype html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#f5f6f3" />
-  <meta name="description" content="JSP Robot, le projet de Morgan Bastos saidani, Enzo Baron, Mohamed Diakhate et Fedor Batin au Lycée Professionnel Jacques Prevert." />
+<!DOCTYPE html><html lang="fr"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f6f3">
+  <meta name="description" content="JSP Robot, le projet de Morgan Bastos saidani, Enzo Baron, Mohamed Diakhate et Fedor Batin au Lycée Professionnel Jacques Prevert.">
   <title>JSP Robot — L’idée prend vie.</title>
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=rgb-1" />
-  <link rel="preload" href="assets/fonts/space-grotesk.ttf" as="font" type="font/ttf" crossorigin />
-  <link rel="stylesheet" href="styles.css?v=rgb-1" />
-  <script type="module" src="js/app.js?v=rgb-1"></script>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=rgb-2">
+  <link rel="preload" href="assets/fonts/space-grotesk.ttf" as="font" type="font/ttf" crossorigin="">
+  <link rel="stylesheet" href="styles.css?v=rgb-2">
+  <script type="module" src="js/app.js?v=rgb-2"></script>
 </head>
 <body>
   <a class="skip" href="#contenu">Aller au contenu</a>
@@ -20,92 +18,90 @@
       <a href="#projet" class="brand" aria-label="JSP Robot, accueil"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>JSP<span class="brand-light">ROBOT</span></span></a>
       <button class="menu-toggle" aria-expanded="false" aria-controls="navigation"><span>Menu</span><span class="menu-icon" aria-hidden="true"></span></button>
       <div class="nav-links" id="navigation"><a href="#projet" aria-current="location">Le projet</a><a href="#galerie">En images</a><a href="#equipe">L’équipe</a></div>
-      <button class="presentation-toggle" aria-pressed="false" aria-controls="presentation-controls"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 9V4h5m6 0h5v5m0 6v5h-5m-6 0H4v-5" /></svg><span>Présenter le projet</span></button>
+      <button class="presentation-toggle" aria-pressed="false" aria-controls="presentation-controls"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 9V4h5m6 0h5v5m0 6v5h-5m-6 0H4v-5"></path></svg><span>Présenter</span></button>
     </nav>
   </header>
   <main id="contenu" tabindex="-1">
     <section class="hero chapter wrap" id="projet" aria-labelledby="hero-title" data-chapter="Le projet">
-      <div class="hero-top"><p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Projet de robotique</p><span class="mono hero-edition">Lycée Jacques Prevert <span aria-hidden="true">/</span> JSP 001</span></div>
+
       <div class="hero-layout">
         <div class="hero-copy">
-          <div class="hero-label mono"><span>01</span> L’imagination en mouvement</div>
+
           <h1 id="hero-title"><span class="title-line"><span>L’idée</span></span><span class="title-line"><span>prend <em>vie.</em></span></span></h1>
-          <p class="intro">Un robot, quatre élèves.<br />Et l’envie de construire ensemble.</p>
-          <div class="hero-actions"><a href="#galerie" class="button"><span>Explorer le projet</span><span class="button-arrow" aria-hidden="true">↗</span></a><a href="#equipe" class="text-link">Rencontrer l’équipe <span aria-hidden="true">↗</span></a></div>
-          <div class="hero-signature"><span class="rgb-line" aria-hidden="true"><i></i><i></i><i></i></span><span class="mono">Trois couleurs. Une même énergie.</span></div>
+          <p class="intro">Un robot. Quatre élèves.</p>
+          <div class="hero-actions"><a href="#galerie" class="button"><span>Explorer le projet</span><span class="button-arrow" aria-hidden="true">↗</span></a></div>
+          <div class="hero-signature" aria-hidden="true"><span class="rgb-line" aria-hidden="true"><i></i><i></i><i></i></span></div>
         </div>
         <figure class="robot-stage" aria-labelledby="robot-caption">
-          <span class="stage-coordinate mono" aria-hidden="true">JSP / EXPLORATION 3D</span>
+
           <span class="stage-corner corner-tl" aria-hidden="true"></span><span class="stage-corner corner-br" aria-hidden="true"></span>
           <div class="stage-grid" aria-hidden="true"></div><div class="stage-orbit" aria-hidden="true"></div>
           <div class="scene-container" id="robot-viewer" aria-busy="true">
             <div class="scene-fallback" id="scene-fallback">
-              <img src="assets/demo/details.jpg" alt="Illustration d’un robot à quatre roues, châssis métallique et plateforme bleue, générée par IA" width="1254" height="1254" fetchpriority="high" />
-              <p class="mono" id="scene-message">Préparation de la vue 3D…</p>
+              <img src="assets/demo/details.jpg" alt="Illustration d’un robot à quatre roues, châssis métallique et plateforme bleue, générée par IA" width="1254" height="1254" fetchpriority="high">
+              <p class="mono sr-only" id="scene-message">Préparation de la vue 3D…</p>
               <noscript><p>Activez JavaScript pour explorer le robot en 3D.</p></noscript>
             </div>
           </div>
-          <div class="stage-tag tag-blue" aria-hidden="true"><span class="tag-line"></span><span>Conçu pour explorer<small>Châssis & mouvement</small></span></div>
-          <div class="stage-tag tag-green" aria-hidden="true"><span class="tag-line"></span><span>De l’idée à l’objet<small>Assemblage & électronique</small></span></div>
-          <div class="scene-controls" id="scene-controls" hidden><span class="drag-hint mono"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M4 12h16M8 8l-4 4 4 4m8-8 4 4-4 4" /></svg> Glisser pour explorer</span><button class="reset-view mono" id="reset-view" aria-label="Réinitialiser la vue du robot">↺ <span>Réinitialiser</span></button></div>
-          <figcaption class="robot-caption" id="robot-caption"><span class="concept-label mono" id="model-label"><span class="status-dot" aria-hidden="true"></span> Concept 3D · inspiré des illustrations</span><span class="mono" aria-hidden="true">360°</span></figcaption>
+
+          <div class="scene-controls" id="scene-controls" hidden=""><span class="drag-hint mono"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M4 12h16M8 8l-4 4 4 4m8-8 4 4-4 4"></path></svg> Glisser pour explorer</span><button class="reset-view mono" id="reset-view" aria-label="Réinitialiser la vue du robot">↺ <span class="sr-only">Réinitialiser</span></button></div>
+          <figcaption class="sr-only" id="robot-caption"><span class="concept-label mono" id="model-label"><span class="status-dot" aria-hidden="true"></span> Concept 3D · inspiré des illustrations</span></figcaption>
         </figure>
       </div>
-      <div class="hero-bottom"><a href="#galerie" class="scroll-cue"><span class="scroll-arrow" aria-hidden="true">↓</span><span class="mono">L’histoire continue</span></a><div class="process-line" aria-label="Imaginer, construire, donner vie"><span><i class="red-dot"></i>Imaginer</span><span><i class="green-dot"></i>Construire</span><span><i class="blue-dot"></i>Donner vie</span></div><button class="motion-toggle" aria-pressed="false" aria-label="Mettre les animations en pause"><span class="motion-icon" aria-hidden="true"></span><span class="motion-text">Pause des animations</span></button></div>
+      <div class="hero-bottom"><a href="#galerie" class="scroll-cue" aria-label="Voir les images"><span class="scroll-arrow" aria-hidden="true">↓</span></a><button class="motion-toggle" aria-pressed="false" aria-label="Mettre les animations en pause"><span class="motion-icon" aria-hidden="true"></span><span class="motion-text sr-only">Pause des animations</span></button></div>
     </section>
     <section class="school-section wrap reveal" aria-label="Notre lycée">
-      <div class="school-emblem"><img src="images/logo-lycee.png" alt="Logo du Lycée Professionnel Jacques Prevert" width="104" height="104" loading="lazy" /></div>
-      <div class="school-identity"><span class="eyebrow">Un projet réalisé au</span><p class="school-name">Lycée Professionnel<br />Jacques Prevert</p></div>
-      <p class="school-motto">Pensé ensemble.<br /><span>Construit avec passion.</span></p>
-      <span class="school-sign mono">La curiosité comme point de départ.<br />Le collectif comme force.</span>
+      <div class="school-emblem"><img src="images/logo-lycee.png" alt="Logo du Lycée Professionnel Jacques Prevert" width="104" height="104" loading="lazy"></div>
+      <div class="school-identity"><p class="school-name">Lycée Professionnel<br>Jacques Prevert</p></div>
+
     </section>
     <section class="gallery-section chapter" id="galerie" aria-labelledby="gallery-title" data-chapter="En images">
       <div class="wrap">
-        <div class="section-heading reveal"><div><p class="section-kicker mono"><span>02 /</span> Du concept aux détails</p><h2 id="gallery-title">Voir l’idée.<br /><span class="muted">Comprendre le projet.</span></h2></div><p class="section-aside">Un regard sur les pièces,<br />l’assemblage et les premiers essais.</p></div>
+        <div class="section-heading reveal"><div><h2 id="gallery-title">Le robot, en images.</h2></div></div>
         <div class="gallery" role="region" aria-roledescription="carrousel" aria-label="Le robot en quatre images" tabindex="0">
           <div class="gallery-viewport">
             <figure class="gallery-slide" id="slide-details" data-slide="0">
-              <div class="slide-copy"><span class="slide-number" aria-hidden="true">01</span><span class="slide-category mono">Observer</span><h3>Tout commence<br />par un détail.</h3><p>Une structure, des pièces, des connexions. Regarder de plus près ce qui compose un robot.</p><span class="illustration-label">Illustration générée par IA</span></div>
-              <div class="slide-image"><img src="assets/demo/details.jpg" data-photo="details" data-custom-alt="Détails du robot JSP" alt="Détail d’un robot éducatif à quatre roues, illustration générée par IA" width="1254" height="1254" loading="lazy" /><span class="image-corner mono" aria-hidden="true">JSP — 01 / 04</span></div>
+              <div class="slide-copy"><span class="slide-number" aria-hidden="true">01</span><h3>Les détails.</h3><span class="illustration-label sr-only">Illustration générée par IA</span></div>
+              <div class="slide-image"><img src="assets/demo/details.jpg" data-photo="details" data-custom-alt="Détails du robot JSP" alt="Détail d’un robot éducatif à quatre roues, illustration générée par IA" width="1254" height="1254" loading="lazy"></div>
             </figure>
             <figure class="gallery-slide" id="slide-atelier" data-slide="1">
-              <div class="slide-copy"><span class="slide-number" aria-hidden="true">02</span><span class="slide-category mono">Assembler</span><h3>Pièce après pièce,<br />l’idée se construit.</h3><p>De l’établi à l’assemblage : le plaisir de donner une forme concrète à une idée commune.</p><span class="illustration-label">Illustration générée par IA</span></div>
-              <div class="slide-image"><img src="assets/demo/atelier.jpg" data-photo="atelier" data-custom-alt="Assemblage du robot JSP dans l’atelier" alt="Établi de robotique, illustration générée par IA" width="1200" height="800" loading="lazy" /><span class="image-corner mono" aria-hidden="true">JSP — 02 / 04</span></div>
+              <div class="slide-copy"><span class="slide-number" aria-hidden="true">02</span><h3>L’assemblage.</h3><span class="illustration-label sr-only">Illustration générée par IA</span></div>
+              <div class="slide-image"><img src="assets/demo/atelier.jpg" data-photo="atelier" data-custom-alt="Assemblage du robot JSP dans l’atelier" alt="Établi de robotique, illustration générée par IA" width="1200" height="800" loading="lazy"></div>
             </figure>
             <figure class="gallery-slide" id="slide-electronique" data-slide="2">
-              <div class="slide-copy"><span class="slide-number" aria-hidden="true">03</span><span class="slide-category mono">Connecter</span><h3>Ce qui donne<br />vie au mouvement.</h3><p>Sous la structure, un autre monde : les circuits, les câbles et les connexions de l’électronique.</p><span class="illustration-label">Illustration générée par IA</span></div>
-              <div class="slide-image"><img src="assets/demo/electronique.jpg" data-photo="electronique" data-custom-alt="Électronique et câblage du robot JSP" alt="Circuit électronique, illustration générée par IA" width="1200" height="800" loading="lazy" /><span class="image-corner mono" aria-hidden="true">JSP — 03 / 04</span></div>
+              <div class="slide-copy"><span class="slide-number" aria-hidden="true">03</span><h3>L’électronique.</h3><span class="illustration-label sr-only">Illustration générée par IA</span></div>
+              <div class="slide-image"><img src="assets/demo/electronique.jpg" data-photo="electronique" data-custom-alt="Électronique et câblage du robot JSP" alt="Circuit électronique, illustration générée par IA" width="1200" height="800" loading="lazy"></div>
             </figure>
             <figure class="gallery-slide" id="slide-essais" data-slide="3">
-              <div class="slide-copy"><span class="slide-number" aria-hidden="true">04</span><span class="slide-category mono">Explorer</span><h3>Et maintenant,<br />place aux essais.</h3><p>Observer, ajuster, recommencer. Chaque essai ouvre une nouvelle piste pour faire avancer le projet.</p><span class="illustration-label">Illustration générée par IA</span></div>
-              <div class="slide-image"><img src="assets/demo/essais.jpg" data-photo="essais" data-custom-alt="Le robot JSP pendant les essais" alt="Robot à roues en essai, illustration générée par IA" width="1200" height="800" loading="lazy" /><span class="image-corner mono" aria-hidden="true">JSP — 04 / 04</span></div>
+              <div class="slide-copy"><span class="slide-number" aria-hidden="true">04</span><h3>Les essais.</h3><span class="illustration-label sr-only">Illustration générée par IA</span></div>
+              <div class="slide-image"><img src="assets/demo/essais.jpg" data-photo="essais" data-custom-alt="Le robot JSP pendant les essais" alt="Robot à roues en essai, illustration générée par IA" width="1200" height="800" loading="lazy"></div>
             </figure>
           </div>
-          <div class="gallery-controls" hidden>
+          <div class="gallery-controls" hidden="">
             <div class="gallery-count mono"><span id="gallery-current">01</span><span class="count-line" aria-hidden="true"></span><span>04</span></div>
-            <div class="gallery-tabs" role="group" aria-label="Choisir une image"><button aria-label="Image 1 : Les détails" aria-controls="slide-details" aria-pressed="true" data-go="0"><span>Les détails</span></button><button aria-label="Image 2 : L’assemblage" aria-controls="slide-atelier" aria-pressed="false" data-go="1"><span>L’assemblage</span></button><button aria-label="Image 3 : L’électronique" aria-controls="slide-electronique" aria-pressed="false" data-go="2"><span>L’électronique</span></button><button aria-label="Image 4 : Les essais" aria-controls="slide-essais" aria-pressed="false" data-go="3"><span>Les essais</span></button></div>
+            <div class="gallery-tabs" role="group" aria-label="Choisir une image"><button aria-label="Image 1 : Les détails" aria-controls="slide-details" aria-pressed="true" data-go="0"><span class="sr-only">Les détails</span></button><button aria-label="Image 2 : L’assemblage" aria-controls="slide-atelier" aria-pressed="false" data-go="1"><span class="sr-only">L’assemblage</span></button><button aria-label="Image 3 : L’électronique" aria-controls="slide-electronique" aria-pressed="false" data-go="2"><span class="sr-only">L’électronique</span></button><button aria-label="Image 4 : Les essais" aria-controls="slide-essais" aria-pressed="false" data-go="3"><span class="sr-only">Les essais</span></button></div>
             <div class="gallery-arrows"><button id="gallery-prev" class="circle-button" aria-label="Image précédente">←</button><button id="gallery-next" class="circle-button" aria-label="Image suivante">→</button></div>
           </div>
           <p class="sr-only" id="gallery-status" aria-live="polite" aria-atomic="true"></p>
         </div>
-        <p class="image-disclosure">Les images présentent un concept illustratif et sont générées par IA.</p>
+        <p class="image-disclosure">Illustrations IA</p>
       </div>
     </section>
     <section class="team-section chapter wrap" id="equipe" aria-labelledby="team-title" data-chapter="L’équipe">
-      <div class="section-heading reveal"><div><p class="section-kicker mono"><span>03 /</span> Le collectif</p><h2 id="team-title">Quatre regards.<br /><span class="muted">Une même direction.</span></h2></div><div class="team-aside"><span class="rgb-knot" aria-hidden="true"><i></i><i></i><i></i></span><p>Des idées différentes.<br />Un projet commun.</p></div></div>
+      <div class="section-heading reveal"><div><h2 id="team-title">L’équipe.</h2></div><div class="team-aside"><span class="rgb-knot" aria-hidden="true"><i></i><i></i><i></i></span></div></div>
       <div class="team-list">
-        <article class="member reveal"><span class="member-number mono">01 /</span><h3>Morgan Bastos saidani</h3><span class="member-initials" aria-hidden="true">MB</span></article>
-        <article class="member reveal"><span class="member-number mono">02 /</span><h3>Enzo Baron</h3><span class="member-initials" aria-hidden="true">EB</span></article>
-        <article class="member reveal"><span class="member-number mono">03 /</span><h3>Mohamed Diakhate</h3><span class="member-initials" aria-hidden="true">MD</span></article>
-        <article class="member reveal"><span class="member-number mono">04 /</span><h3>Fedor Batin</h3><span class="member-initials" aria-hidden="true">FB</span></article>
+        <article class="member reveal"><h3>Morgan Bastos saidani</h3></article>
+        <article class="member reveal"><h3>Enzo Baron</h3></article>
+        <article class="member reveal"><h3>Mohamed Diakhate</h3></article>
+        <article class="member reveal"><h3>Fedor Batin</h3></article>
       </div>
-      <div class="team-footer"><span class="mono">Lycée Professionnel Jacques Prevert</span><span class="team-note">Imaginer. Construire. Ensemble.</span></div>
+
     </section>
-    <section class="closing wrap reveal" aria-label="JSP Robot"><p>La suite<br />s’écrit <span>ensemble.</span></p><a class="closing-link" href="#projet" aria-label="Revenir au projet"><span aria-hidden="true">↗</span></a><div class="closing-caption mono"><span>JSP Robot — L’idée prend vie.</span><span class="rgb-line" aria-hidden="true"><i></i><i></i><i></i></span></div></section>
+
   </main>
-  <footer class="footer wrap"><small>JSP Robot · Lycée Professionnel Jacques Prevert</small><a href="#projet">Retour en haut <span aria-hidden="true">↑</span></a></footer>
-  <nav class="chapter-rail" aria-label="Parcourir les chapitres" hidden><a href="#projet" aria-label="Chapitre 1 : Le projet" aria-current="location"><span>01</span></a><a href="#galerie" aria-label="Chapitre 2 : En images"><span>02</span></a><a href="#equipe" aria-label="Chapitre 3 : L’équipe"><span>03</span></a></nav>
-  <div class="presentation-controls" id="presentation-controls" hidden role="group" aria-label="Commandes de présentation"><button id="chapter-prev" aria-label="Chapitre précédent">←</button><span class="mono" id="chapter-status" aria-live="polite" aria-atomic="true">01 / 03</span><button id="chapter-next" aria-label="Chapitre suivant">→</button><span class="presentation-divider" aria-hidden="true"></span><button id="fullscreen-toggle" aria-label="Passer en plein écran">Plein écran</button><button id="presentation-exit">Quitter <span aria-hidden="true">×</span></button></div>
+  <footer class="footer wrap"><small>JSP Robot</small><a href="#projet" aria-label="Retour en haut">↑</a></footer>
+  <nav class="chapter-rail" aria-label="Parcourir les chapitres" hidden=""><a href="#projet" aria-label="Chapitre 1 : Le projet" aria-current="location"><span>01</span></a><a href="#galerie" aria-label="Chapitre 2 : En images"><span>02</span></a><a href="#equipe" aria-label="Chapitre 3 : L’équipe"><span>03</span></a></nav>
+  <div class="presentation-controls" id="presentation-controls" hidden="" role="group" aria-label="Commandes de présentation"><button id="chapter-prev" aria-label="Chapitre précédent">←</button><span class="mono" id="chapter-status" aria-live="polite" aria-atomic="true">01 / 03</span><button id="chapter-next" aria-label="Chapitre suivant">→</button><span class="presentation-divider" aria-hidden="true"></span><button id="fullscreen-toggle" aria-label="Passer en plein écran">Plein écran</button><button id="presentation-exit">Quitter <span aria-hidden="true">×</span></button></div>
   <p class="sr-only" id="presentation-hint" aria-live="polite"></p>
-</body>
-</html>
+
+</body></html>

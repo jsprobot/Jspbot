@@ -206,7 +206,7 @@ function setPresenting(enabled) {
   root.classList.toggle("presentation-mode", enabled);
   controls.hidden = !enabled;
   presentationButton.setAttribute("aria-pressed", String(enabled));
-  presentationButton.querySelector("span").textContent = enabled ? "Quitter la présentation" : "Présenter le projet";
+  presentationButton.querySelector("span").textContent = enabled ? "Quitter" : "Présenter";
   closeMenu();
   document.querySelector("#presentation-hint").textContent = enabled
     ? "Mode présentation. Flèches haut et bas : chapitres. Flèches gauche et droite : images. Échap : quitter."
@@ -304,7 +304,7 @@ function showFallback(message) {
   document.querySelector("#model-label").textContent = "Illustration du concept · générée par IA";
   document.querySelector("#scene-controls").hidden = true;
 }
-import("../assets/robot-scene.js?v=rgb-1")
+import("../assets/robot-scene.js?v=rgb-2")
   .then(({ mountRobot }) => mountRobot(viewer, showFallback))
   .catch((error) => {
     showFallback("Illustration générée par IA · La vue 3D est indisponible sur ce navigateur.");
