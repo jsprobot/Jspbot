@@ -304,7 +304,7 @@ function showFallback(message) {
   document.querySelector("#model-label").textContent = "Illustration du concept · générée par IA";
   document.querySelector("#scene-controls").hidden = true;
 }
-import("../assets/robot-scene.js")
+import("../assets/robot-scene.js?v=rgb-1")
   .then(({ mountRobot }) => mountRobot(viewer, showFallback))
   .catch((error) => {
     showFallback("Illustration générée par IA · La vue 3D est indisponible sur ce navigateur.");
