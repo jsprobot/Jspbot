@@ -17,4 +17,12 @@ Limitations:
 - Group leader and robot availability need class-specific input.
 - Robot weight and assembled dimensions need measurement.
 - S2-S18 detailed planning is proposed pending the separate specification.
-- Existing screenshots show earlier designs, not the worksheet-aligned version.
+- Earlier RGB screenshots show previous designs.
+
+Live website subsequently checked in Chromium (1363 x 936):
+- All four worksheet phases visible and collapsible.
+- Sprite single-step moves from (240,84) to (242,84).
+- Right-only sensor selection displays the matching right correction.
+- No horizontal overflow on this viewport.
+- New screenshot: docs/lesson-preview-1793726036467.jpg
+Native mBlock editor execution and GPU rendering remain unconfirmed.
