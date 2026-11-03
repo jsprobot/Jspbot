@@ -1,37 +1,20 @@
-JSP Robot — RGB redesign verification
+JSP Robot — worksheet-aligned lesson
 
-PASS npm run build: production Three.js bundle rebuilt
-PASS npm run check: application, scene and model configuration syntax
-PASS npm test: 9 automated checks
-PASS git diff --check
+Checks:
+- Production Three.js bundle rebuilt for a tracked Land Raider interpretation.
+- CSS parsed with esbuild, no warnings.
+- 13 automated tests: content and local references, gallery input, touch,
+  presentation navigation across 4 chapters, motion preferences, fallback,
+  four worksheet phases, interactive lesson controls, two-sensor decisions,
+  sprite geometry, native mBlock archive integrity and 3D camera framing.
+- Team names and school preserved.
+- Handwritten data and source photographs of the other group are not published.
 
-DOM checks (jsdom, not a browser):
-- Original team names, school identity, anchors and image paths preserved
-- Gallery direct selection, wraparound, rapid input and keyboard control
-- Horizontal touch swipe changes images; vertical gestures do not
-- Presentation chapter navigation, gallery arrows and Escape focus restoration
-- Fullscreen denial handled without breaking the presentation
-- Menu closes via Escape, outside click and navigation
-- Reduced motion disables automatic animation while retaining controls
-- Unavailable WebGL and replacement photos retain labelled fallback imagery
-- Without JavaScript all four gallery images remain readable
-
-Geometry check:
-- Four-wheel rover, no humanoid head, finite geometry
-- Complete rotation at five aspect ratios (0.65, 0.8, 1, 1.4, 1.7)
-- Geometry remains inside the fitted camera with a safety margin
-
-Published-site browser verification (desktop Chromium, 1363 x 936):
-PASS New light stylesheet and enhanced application loaded together
-PASS No horizontal overflow on the checked desktop viewport
-PASS Gallery changes to image 2 with the corresponding caption and selected tab
-PASS Presentation enters, switches chapters and exits successfully
-PASS School logo has computed filter: none
-PASS Header, hero and gallery composition inspected on the live page
-
-The browser disables WebGL. The labelled image fallback was verified;
-visual GPU rendering of the new rover was not verified here.
-Mobile visual layout and fullscreen success still need a device check.
-Managed local preview remains unavailable (sites-previewd mailbox missing).
-New desktop screenshot: docs/jsp-robot-rgb-1793716879520.jpg
-Existing docs/preview-*.png files show the previous design.
+Limitations:
+- Native mBlock import/run not confirmed: browser environment became unavailable
+  during import and had disabled WebGL.
+- 3D GPU rendering and physical robot behavior remain unverified.
+- Group leader and robot availability need class-specific input.
+- Robot weight and assembled dimensions need measurement.
+- S2-S18 detailed planning is proposed pending the separate specification.
+- Existing screenshots show earlier designs, not the worksheet-aligned version.

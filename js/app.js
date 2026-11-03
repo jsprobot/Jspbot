@@ -148,7 +148,7 @@ let pendingChapter = null;
 let navigationTimer = 0;
 rail.hidden = false;
 function updateChapterControls() {
-  document.querySelector("#chapter-status").textContent = String(currentChapter + 1).padStart(2, "0") + " / 03";
+  document.querySelector("#chapter-status").textContent = String(currentChapter + 1).padStart(2, "0") + " / " + String(chapters.length).padStart(2, "0");
   document.querySelector("#chapter-prev").disabled = currentChapter === 0;
   document.querySelector("#chapter-next").disabled = currentChapter === chapters.length - 1;
 }
@@ -249,7 +249,7 @@ document.addEventListener("keydown", (event) => {
   else if (["ArrowLeft", "ArrowRight"].includes(event.key)) {
     event.preventDefault();
     const direction = event.key === "ArrowRight" ? 1 : -1;
-    if (currentChapter === 1) selectSlide(slideIndex + direction);
+    if (chapters[currentChapter].id === "galerie") selectSlide(slideIndex + direction);
     else goToChapter(currentChapter + direction);
   } else if (event.key === "Home") { event.preventDefault(); goToChapter(0); }
   else if (event.key === "End") { event.preventDefault(); goToChapter(chapters.length - 1); }
@@ -301,12 +301,12 @@ function showFallback(message) {
   viewer.setAttribute("aria-busy", "false");
   viewer.classList.remove("is-ready");
   document.querySelector("#scene-message").textContent = message;
-  document.querySelector("#model-label").textContent = "Illustration du concept · générée par IA";
+  document.querySelector("#model-label").textContent = "mBot Ranger · visuel Makeblock";
   document.querySelector("#scene-controls").hidden = true;
 }
-import("../assets/robot-scene.js?v=rgb-2")
+import("../assets/robot-scene.js?v=lesson-1")
   .then(({ mountRobot }) => mountRobot(viewer, showFallback))
   .catch((error) => {
-    showFallback("Illustration générée par IA · La vue 3D est indisponible sur ce navigateur.");
+    showFallback("mBot Ranger · La vue 3D est indisponible sur ce navigateur.");
     console.warn("La scène 3D n’a pas pu démarrer.", error);
   });

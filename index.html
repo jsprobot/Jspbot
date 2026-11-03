@@ -2,13 +2,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f6f3">
-  <meta name="description" content="JSP Robot, le projet de Morgan Bastos saidani, Enzo Baron, Mohamed Diakhate et Fedor Batin au Lycée Professionnel Jacques Prevert.">
-  <title>JSP Robot — L’idée prend vie.</title>
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=rgb-2">
+  <meta name="description" content="Projet de suivi de ligne avec le mBot Ranger et mBlock 5. Morgan Bastos saidani, Enzo Baron, Mohamed Diakhate et Fedor Batin — Lycée Professionnel Jacques Prevert.">
+  <title>JSP Robot — mBot Ranger &amp; suivi de ligne</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=lesson-1">
   <link rel="preload" href="assets/fonts/space-grotesk.ttf" as="font" type="font/ttf" crossorigin="">
-  <link rel="stylesheet" href="styles.css?v=rgb-2">
-  <script type="module" src="js/app.js?v=rgb-2"></script>
-</head>
+  <link rel="stylesheet" href="styles.css?v=lesson-1">
+  <script type="module" src="js/app.js?v=lesson-1"></script>
+<script type="module" src="js/lesson-ui.js?v=lesson-1"></script></head>
 <body>
   <a class="skip" href="#contenu">Aller au contenu</a>
   <div class="reading-progress" aria-hidden="true"></div>
@@ -17,7 +17,7 @@
     <nav class="nav wrap" aria-label="Navigation principale">
       <a href="#projet" class="brand" aria-label="JSP Robot, accueil"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>JSP<span class="brand-light">ROBOT</span></span></a>
       <button class="menu-toggle" aria-expanded="false" aria-controls="navigation"><span>Menu</span><span class="menu-icon" aria-hidden="true"></span></button>
-      <div class="nav-links" id="navigation"><a href="#projet" aria-current="location">Le projet</a><a href="#galerie">En images</a><a href="#equipe">L’équipe</a></div>
+      <div class="nav-links" id="navigation"><a href="#projet" aria-current="location">Le projet</a><a href="#seance">La séance</a><a href="#galerie">Le robot</a><a href="#equipe">L’équipe</a></div>
       <button class="presentation-toggle" aria-pressed="false" aria-controls="presentation-controls"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 9V4h5m6 0h5v5m0 6v5h-5m-6 0H4v-5"></path></svg><span>Présenter</span></button>
     </nav>
   </header>
@@ -27,9 +27,9 @@
       <div class="hero-layout">
         <div class="hero-copy">
 
-          <h1 id="hero-title"><span class="title-line"><span>L’idée</span></span><span class="title-line"><span>prend <em>vie.</em></span></span></h1>
-          <p class="intro">Un robot. Quatre élèves.</p>
-          <div class="hero-actions"><a href="#galerie" class="button"><span>Explorer le projet</span><span class="button-arrow" aria-hidden="true">↗</span></a></div>
+          <h1 id="hero-title"><span class="title-line"><span>Suivre</span></span><span class="title-line"><span>la <em>ligne.</em></span></span></h1>
+          <p class="intro">mBot Ranger · Suiveur de ligne</p>
+          <div class="hero-actions"><a href="#seance" class="button"><span>Voir la séance</span><span class="button-arrow" aria-hidden="true">↗</span></a></div>
           <div class="hero-signature" aria-hidden="true"><span class="rgb-line" aria-hidden="true"><i></i><i></i><i></i></span></div>
         </div>
         <figure class="robot-stage" aria-labelledby="robot-caption">
@@ -38,53 +38,108 @@
           <div class="stage-grid" aria-hidden="true"></div><div class="stage-orbit" aria-hidden="true"></div>
           <div class="scene-container" id="robot-viewer" aria-busy="true">
             <div class="scene-fallback" id="scene-fallback">
-              <img src="assets/demo/details.jpg" alt="Illustration d’un robot à quatre roues, châssis métallique et plateforme bleue, générée par IA" width="1254" height="1254" fetchpriority="high">
+              <img src="assets/makeblock/land-raider.png" alt="mBot Ranger en configuration Land Raider à chenilles, visuel Makeblock" width="1254" height="1254" fetchpriority="high">
               <p class="mono sr-only" id="scene-message">Préparation de la vue 3D…</p>
               <noscript><p>Activez JavaScript pour explorer le robot en 3D.</p></noscript>
             </div>
           </div>
 
           <div class="scene-controls" id="scene-controls" hidden=""><span class="drag-hint mono"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M4 12h16M8 8l-4 4 4 4m8-8 4 4-4 4"></path></svg> Glisser pour explorer</span><button class="reset-view mono" id="reset-view" aria-label="Réinitialiser la vue du robot">↺ <span class="sr-only">Réinitialiser</span></button></div>
-          <figcaption class="sr-only" id="robot-caption"><span class="concept-label mono" id="model-label"><span class="status-dot" aria-hidden="true"></span> Concept 3D · inspiré des illustrations</span></figcaption>
+          <figcaption class="sr-only" id="robot-caption"><span class="concept-label mono" id="model-label">Interprétation 3D du mBot Ranger · Land Raider</span></figcaption>
         </figure>
       </div>
-      <div class="hero-bottom"><a href="#galerie" class="scroll-cue" aria-label="Voir les images"><span class="scroll-arrow" aria-hidden="true">↓</span></a><button class="motion-toggle" aria-pressed="false" aria-label="Mettre les animations en pause"><span class="motion-icon" aria-hidden="true"></span><span class="motion-text sr-only">Pause des animations</span></button></div>
+      <div class="hero-bottom"><a href="#seance" class="scroll-cue" aria-label="Voir la séance"><span class="scroll-arrow" aria-hidden="true">↓</span></a><button class="motion-toggle" aria-pressed="false" aria-label="Mettre les animations en pause"><span class="motion-icon" aria-hidden="true"></span><span class="motion-text sr-only">Pause des animations</span></button></div>
     </section>
     <section class="school-section wrap reveal" aria-label="Notre lycée">
       <div class="school-emblem"><img src="images/logo-lycee.png" alt="Logo du Lycée Professionnel Jacques Prevert" width="104" height="104" loading="lazy"></div>
       <div class="school-identity"><p class="school-name">Lycée Professionnel<br>Jacques Prevert</p></div>
 
     </section>
-    <section class="gallery-section chapter" id="galerie" aria-labelledby="gallery-title" data-chapter="En images">
+    <section class="lesson-section chapter wrap" id="seance" aria-labelledby="lesson-title" data-chapter="La séance">
+  <div class="section-heading reveal"><div><p class="lesson-eyebrow">Séance 1 · 2 heures</p><h2 id="lesson-title">Suivre le fil du projet.</h2></div></div>
+  <p class="lesson-intro">Comprendre le robot. Programmer un premier suivi de ligne.</p>
+  <div class="lesson-phases">
+    <details class="lesson-phase" id="phase-1">
+      <summary><span class="phase-number">01</span><span><strong>Le projet &amp; le groupe</strong><span class="phase-subtitle">Accueil et présentation</span></span><span class="phase-duration">25 min</span><span class="phase-chevron" aria-hidden="true">+</span></summary>
+      <div class="phase-body">
+        <div class="lesson-columns">
+          <div><h3>Le défi</h3><p>Un robot suiveur de ligne adapte sa trajectoire grâce à des capteurs qui repèrent un tracé au sol.</p><p>Programmer un robot capable de suivre une ligne, puis améliorer sa vitesse et sa fiabilité.</p><h4>Un exemple industriel</h4><p>Un chariot de transport automatique suit un tracé au sol pour déplacer des pièces dans une usine.</p></div>
+          <div><h3>Notre groupe</h3><dl class="lesson-facts"><div><dt>Nom</dt><dd>JSP Robot</dd></div><div><dt>Effectif</dt><dd>4 élèves · <a href="#equipe">Voir l’équipe ↗</a></dd></div><div><dt>Chef de projet</dt><dd>À désigner par le groupe</dd></div><div><dt>Robots disponibles</dt><dd>Date à confirmer avec l’enseignante</dd></div></dl></div>
+        </div>
+        <details class="lesson-detail"><summary>Le planning : S1 à S18</summary><div class="table-scroll"><table><caption>Périodes indiquées sur la fiche</caption><thead><tr><th>Période</th><th>Séances</th><th>Contenu proposé</th></tr></thead><tbody><tr><th>Préparation</th><td>S1–S2</td><td>Comprendre le défi, former le groupe, simuler.</td></tr><tr><th>Appropriation technique</th><td>S3–S7</td><td>Assembler, découvrir les capteurs, programmer et tester.</td></tr><tr><th>Optimisation</th><td>S8–S14</td><td>Ajuster vitesse, trajectoire et recherche de ligne.</td></tr><tr><th>Compétition et bilan</th><td>S15–S18</td><td>Comparer les essais et présenter le bilan.</td></tr></tbody></table></div><p class="lesson-note">Le contenu détaillé reste à valider avec le cahier des charges, qui n’apparaît pas sur les photos.</p></details>
+        <details class="lesson-detail"><summary>Objectif &amp; matériel de la séance</summary><p>Objectif : comprendre le projet et découvrir l’environnement de programmation.</p><p>Matériel : poste informatique, fiche technique du mBot Ranger et accès à mBlock 5. Le déroulement suit les quatre phases de 25, 35, 50 et 10 minutes, soit 120 minutes.</p></details>
+      </div>
+    </details>
+
+    <details class="lesson-phase" id="phase-2">
+      <summary><span class="phase-number">02</span><span><strong>Découvrir le robot</strong><span class="phase-subtitle">mBot Ranger · référence 90092</span></span><span class="phase-duration">35 min</span><span class="phase-chevron" aria-hidden="true">+</span></summary>
+      <div class="phase-body">
+        <div class="functional-chain" aria-label="Détecter, traiter, agir"><div><strong>Détecter</strong><span>Capteur infrarouge</span></div><span aria-hidden="true">→</span><div><strong>Traiter</strong><span>Me Auriga + programme</span></div><span aria-hidden="true">→</span><div><strong>Agir</strong><span>Moteurs</span></div></div>
+        <details class="lesson-detail"><summary>La fiche d’identité</summary><dl class="lesson-facts spec-grid"><div><dt>Nom</dt><dd>mBot Ranger</dd></div><div><dt>Référence</dt><dd>90092</dd></div><div><dt>Carte de contrôle</dt><dd>Me Auriga</dd></div><div><dt>Microcontrôleur</dt><dd>ATmega2560 · 16 MHz</dd></div><div><dt>Alimentation</dt><dd>6 piles AA, non fournies, ou batterie compatible</dd></div><div><dt>Connectivité</dt><dd>USB, Bluetooth et 10 ports RJ25</dd></div><div><dt>Poids du montage</dt><dd>À peser avec son alimentation</dd></div><div><dt>Dimensions du montage</dt><dd>À mesurer selon la configuration choisie</dd></div></dl><p class="lesson-note">Les dimensions de la carte Auriga sont 100 × 65 × 20 mm. Elles ne sont pas celles du robot assemblé.</p><p><a href="https://www.makeblock.com/products/buy-mbot-ranger" target="_blank" rel="noopener noreferrer">Fiche constructeur ↗</a> · <a href="https://download.makeblock.com/ranger/resource/mBot-Ranger_Blue_STD_EN_D2.1.3_7.40.3703_Edit-1.pdf" target="_blank" rel="noopener noreferrer">Notice de montage ↗</a></p></details>
+        <details class="lesson-detail"><summary>Les six types de capteurs</summary><div class="table-scroll"><table><thead><tr><th>Capteur</th><th>Rôle</th></tr></thead><tbody><tr><th>Suiveur de ligne</th><td>Deux détecteurs infrarouges distinguent le noir et le blanc.</td></tr><tr><th>Ultrason</th><td>Mesurer la distance d’un obstacle.</td></tr><tr><th>Gyroscope</th><td>Mesurer la rotation ; aider au maintien de l’équilibre.</td></tr><tr><th>Luminosité</th><td>Détecter la lumière ambiante avec deux capteurs.</td></tr><tr><th>Son</th><td>Détecter l’intensité sonore.</td></tr><tr><th>Température</th><td>Mesurer la température ambiante.</td></tr></tbody></table></div></details>
+        <details class="lesson-detail"><summary>Les actionneurs</summary><div class="table-scroll"><table><thead><tr><th>Actionneur</th><th>Rôle</th></tr></thead><tbody><tr><th>Moteurs CC</th><td>Transformer l’énergie électrique en mouvement.</td></tr><tr><th>Buzzer</th><td>Émettre un signal sonore.</td></tr><tr><th>LED RGB</th><td>Signaler un état par une couleur ; anneau de 12 LED.</td></tr></tbody></table></div></details>
+        <details class="lesson-detail"><summary>Les trois configurations &amp; le choix proposé</summary><div class="table-scroll"><table><thead><tr><th>Configuration</th><th>Description</th><th>Atout</th></tr></thead><tbody><tr><th>Off-Road Land Raider</th><td>Robot à chenilles.</td><td>Adhérence et franchissement.</td></tr><tr><th>Dashing Raptor</th><td>Véhicule à roues.</td><td>Déplacements rapides sur sol plat.</td></tr><tr><th>Self-Balance Nervous Bird</th><td>Robot à deux roues en équilibre.</td><td>Travail de l’équilibrage avec le gyroscope.</td></tr></tbody></table></div><p><strong>Pour un suivi de ligne rapide sur piste plane : Dashing Raptor.</strong> Ses roues limitent les frottements liés aux chenilles, et il n’a pas à gérer l’équilibre du Nervous Bird. C’est un choix proposé, à vérifier par des essais.</p><p><a href="#galerie">Voir les configurations ↗</a></p></details>
+        <details class="lesson-detail"><summary>Observer avant de programmer</summary><p>Sur les démonstrations et sur le montage, repérer le capteur de ligne, la carte qui prend la décision et les moteurs qui corrigent la trajectoire.</p><p><a href="https://support.makeblock.com/hc/en-us/articles/12822986175383-A-Beginner-s-Guide-to-mBot-Ranger" target="_blank" rel="noopener noreferrer">Démonstrations et documentation Makeblock ↗</a></p></details>
+      </div>
+    </details>
+
+    <details class="lesson-phase" id="phase-3">
+      <summary><span class="phase-number">03</span><span><strong>Programmer avec mBlock 5</strong><span class="phase-subtitle">Le sprite suit la ligne</span></span><span class="phase-duration">50 min</span><span class="phase-chevron" aria-hidden="true">+</span></summary>
+      <div class="phase-body">
+        <div class="lesson-actions"><a class="lesson-button" href="https://ide.mblock.cc/" target="_blank" rel="noopener noreferrer">Ouvrir mBlock 5 ↗</a><a class="lesson-button secondary" href="downloads/S1_suivi_ligne_JSPRobot.mblock" download="">Télécharger le projet ↓</a></div>
+        <details class="lesson-detail"><summary>Prise en main : les quatre zones</summary><p>Utiliser mBlock 5 en ligne ou installer la version PC depuis le site officiel. Pour cet exercice, choisir l’onglet <strong>Sprites / Personnages</strong>.</p><div class="table-scroll"><table><thead><tr><th>Zone</th><th>Emplacement courant</th><th>Rôle</th></tr></thead><tbody><tr><th>Scène</th><td>En haut à gauche.</td><td>Voir le sprite et le fond.</td></tr><tr><th>Palette de blocs</th><td>Colonne des catégories, à côté de la scène.</td><td>Choisir mouvements, capteurs et conditions.</td></tr><tr><th>Zone de programmation</th><td>Grand espace à droite.</td><td>Assembler le programme.</td></tr><tr><th>Sprite</th><td>Onglet Personnages sous la scène.</td><td>Sélectionner le personnage programmé.</td></tr></tbody></table></div><p><a href="https://www.mblock.cc/en-us/download" target="_blank" rel="noopener noreferrer">Télécharger mBlock 5 ↗</a></p></details>
+        <div class="lesson-workbench">
+          <div class="sim-panel"><span class="sim-title">Essai dans le navigateur</span><svg class="sim-canvas" viewBox="0 0 480 360" role="img" aria-label="Un sprite suit une ligne noire ovale sur fond blanc"><rect width="480" height="360" rx="12" fill="#fff"></rect><ellipse cx="240" cy="180" rx="156" ry="96" stroke="#20292c" stroke-width="14" fill="none"></ellipse><g id="sim-sprite" transform="translate(240 84)"><path d="M13 0 -12 -10 -7 0 -12 10Z" fill="#4c6eaa"></path><circle r="3" fill="#b75954"></circle></g></svg>
+            <div class="sim-controls"><button class="lesson-button" id="sim-run" aria-pressed="false">Tester</button><button class="lesson-button secondary" id="sim-step">Un pas</button><button class="sim-reset" id="sim-reset" aria-label="Recommencer la simulation">↺</button><output id="sim-state" aria-live="off">Avancer</output></div>
+            <div class="sim-settings"><label for="sim-speed">Avancer de <output id="sim-speed-value">2</output> pas<input id="sim-speed" type="range" min="1" max="5" step="1" value="2"></label><label for="sim-turn">Tourner de <output id="sim-turn-value">2</output>°<input id="sim-turn" type="range" min="1" max="15" step="1" value="2"></label></div>
+          </div>
+          <div class="block-program" aria-label="Algorithme du sprite en français"><div class="code-block event-block">Quand le drapeau vert est cliqué</div><div class="code-block loop-block">Répéter indéfiniment<div class="code-block condition-block">Si le sprite touche le noir<div class="code-block motion-block">Avancer de 2 pas</div><span>Sinon</span><div class="code-block motion-block">Tourner de 2° à droite</div><div class="code-block motion-block">Avancer de 1 pas</div></div></div></div>
+        </div>
+        <details class="lesson-detail"><summary>Les consignes &amp; l’enregistrement</summary><ol><li>Créer un fond avec une ligne noire.</li><li>Programmer le sprite pour qu’il avance en continu.</li><li>Sur la ligne : avancer tout droit.</li><li>Hors de la ligne : tourner légèrement.</li><li>Tester puis ajuster le nombre de pas et l’angle.</li></ol><p>Le fichier contient le fond, le sprite et les blocs « drapeau vert », « répéter indéfiniment », « si… alors… sinon », « avancer » et « tourner ».</p><p>Dans mBlock : <strong>Fichier → Ouvrir depuis votre ordinateur</strong>, puis choisir le projet téléchargé. Le conserver dans le dossier du groupe sous <code>S1_suivi_ligne_JSPRobot.mblock</code>.</p><p class="lesson-note">Ce premier programme recherche toujours à droite. Tester ses limites avant de passer à l’algorithme à deux capteurs de la séance 2. Les valeurs 2 pas et 2° sont des réglages de départ.</p></details>
+      </div>
+    </details>
+
+    <details class="lesson-phase" id="phase-4">
+      <summary><span class="phase-number">04</span><span><strong>Bilan &amp; prochaine séance</strong><span class="phase-subtitle">Quatre situations, une décision</span></span><span class="phase-duration">10 min</span><span class="phase-chevron" aria-hidden="true">+</span></summary>
+      <div class="phase-body">
+        <div class="lesson-summary"><p>Détecter la ligne : <strong>capteur infrarouge.</strong></p><p>Prendre une décision : <strong>si… alors… sinon.</strong></p><p>Répéter une action : <strong>répéter indéfiniment.</strong></p></div>
+        <h3>Le devoir pour la séance 2</h3><p>Choisir une situation pour comprendre la correction. Les deux points représentent les capteurs, sur une ligne noire et un fond blanc.</p>
+        <div class="sensor-workbench"><svg viewBox="0 0 320 180" role="img" aria-label="Vue de dessus du robot et de ses deux capteurs"><rect width="320" height="180" rx="12" fill="#f5f6f3"></rect><path id="sensor-line" d="M160 0V180" stroke="#20292c" stroke-width="58"></path><rect x="111" y="55" width="98" height="96" rx="14" fill="#dbe4ed" stroke="#4c6eaa"></rect><path d="m148 104 12-17 12 17" fill="none" stroke="#4c6eaa" stroke-width="3"></path><circle id="sensor-left" cx="140" cy="38" r="9" fill="#b75954"></circle><circle id="sensor-right" cx="180" cy="38" r="9" fill="#b75954"></circle></svg><div><div class="sensor-options" role="group" aria-label="Situation des capteurs"><button data-sensor-case="both" aria-pressed="true">Les deux</button><button data-sensor-case="left" aria-pressed="false">Gauche</button><button data-sensor-case="right" aria-pressed="false">Droite</button><button data-sensor-case="none" aria-pressed="false">Aucun</button></div><p id="line-response" aria-live="polite">Les deux capteurs détectent la ligne : avancer tout droit.</p></div></div>
+        <details class="lesson-detail"><summary>L’algorithme complet, en français</summary><ol><li>Au départ, mémoriser une direction de recherche : gauche par défaut.</li><li>Répéter indéfiniment la lecture des deux capteurs.</li><li>Si les deux détectent la ligne : avancer tout droit.</li><li>Si seul le capteur gauche détecte la ligne : corriger à gauche et mémoriser ce côté.</li><li>Si seul le capteur droit détecte la ligne : corriger à droite et mémoriser ce côté.</li><li>Si aucun ne la détecte : chercher lentement dans la dernière direction connue. Si la perte dure 2 secondes, arrêter les moteurs et repositionner le robot.</li></ol><p>Pour tourner à gauche, ralentir le moteur gauche par rapport au droit ; faire l’inverse pour tourner à droite. Les vitesses et la durée de recherche restent à ajuster par essais.</p><a class="lesson-button secondary" href="downloads/S2_algorithme_JSPRobot.txt" download="">Télécharger l’algorithme ↓</a></details>
+      </div>
+    </details>
+  </div>
+  <details class="lesson-sources"><summary>Sources du dossier</summary><p>Consignes : les cinq pages imprimées de la séance 1 fournies par le groupe. Les annotations manuscrites d’une autre équipe ne sont pas reprises.</p><ul><li><a href="https://www.makeblock.com/products/buy-mbot-ranger" target="_blank" rel="noopener noreferrer">Caractéristiques du mBot Ranger</a></li><li><a href="https://support.makeblock.com/hc/en-us/articles/4412149618327-About-Me-Auriga" target="_blank" rel="noopener noreferrer">Carte Me Auriga</a></li><li><a href="https://support.makeblock.com/hc/en-us/articles/12260176114455-About-Me-Line-Follower" target="_blank" rel="noopener noreferrer">Capteur Me Line Follower</a></li><li><a href="https://support.makeblock.com/hc/en-us/articles/1500003839341-About-mBot-Ranger" target="_blank" rel="noopener noreferrer">Les trois configurations</a></li><li><a href="https://support.makeblock.com/hc/en-us/articles/21450522307479-Quick-Start" target="_blank" rel="noopener noreferrer">Prise en main de mBlock 5</a></li></ul></details>
+</section><section class="gallery-section chapter" id="galerie" aria-labelledby="gallery-title" data-chapter="En images">
       <div class="wrap">
-        <div class="section-heading reveal"><div><h2 id="gallery-title">Le robot, en images.</h2></div></div>
+        <div class="section-heading reveal"><div><h2 id="gallery-title">Le mBot Ranger.</h2></div></div>
         <div class="gallery" role="region" aria-roledescription="carrousel" aria-label="Le robot en quatre images" tabindex="0">
           <div class="gallery-viewport">
             <figure class="gallery-slide" id="slide-details" data-slide="0">
-              <div class="slide-copy"><span class="slide-number" aria-hidden="true">01</span><h3>Les détails.</h3><span class="illustration-label sr-only">Illustration générée par IA</span></div>
-              <div class="slide-image"><img src="assets/demo/details.jpg" data-photo="details" data-custom-alt="Détails du robot JSP" alt="Détail d’un robot éducatif à quatre roues, illustration générée par IA" width="1254" height="1254" loading="lazy"></div>
+              <div class="slide-copy"><span class="slide-number" aria-hidden="true">01</span><h3>Land Raider.</h3><span class="illustration-label sr-only">Visuel Makeblock</span></div>
+              <div class="slide-image"><img src="assets/makeblock/land-raider.png" data-photo="details" data-custom-alt="Détails du robot JSP" alt="mBot Ranger en configuration Land Raider à chenilles, visuel Makeblock" width="1254" height="1254" loading="lazy"></div>
             </figure>
             <figure class="gallery-slide" id="slide-atelier" data-slide="1">
-              <div class="slide-copy"><span class="slide-number" aria-hidden="true">02</span><h3>L’assemblage.</h3><span class="illustration-label sr-only">Illustration générée par IA</span></div>
-              <div class="slide-image"><img src="assets/demo/atelier.jpg" data-photo="atelier" data-custom-alt="Assemblage du robot JSP dans l’atelier" alt="Établi de robotique, illustration générée par IA" width="1200" height="800" loading="lazy"></div>
+              <div class="slide-copy"><span class="slide-number" aria-hidden="true">02</span><h3>Dashing Raptor.</h3><span class="illustration-label sr-only">Visuel Makeblock</span></div>
+              <div class="slide-image"><img src="assets/makeblock/dashing-raptor.png" data-photo="atelier" data-custom-alt="Assemblage du robot JSP dans l’atelier" alt="mBot Ranger en configuration Dashing Raptor à roues, visuel Makeblock" width="1200" height="800" loading="lazy"></div>
             </figure>
             <figure class="gallery-slide" id="slide-electronique" data-slide="2">
-              <div class="slide-copy"><span class="slide-number" aria-hidden="true">03</span><h3>L’électronique.</h3><span class="illustration-label sr-only">Illustration générée par IA</span></div>
-              <div class="slide-image"><img src="assets/demo/electronique.jpg" data-photo="electronique" data-custom-alt="Électronique et câblage du robot JSP" alt="Circuit électronique, illustration générée par IA" width="1200" height="800" loading="lazy"></div>
+              <div class="slide-copy"><span class="slide-number" aria-hidden="true">03</span><h3>Nervous Bird.</h3><span class="illustration-label sr-only">Visuel Makeblock</span></div>
+              <div class="slide-image"><img src="assets/makeblock/nervous-bird.png" data-photo="electronique" data-custom-alt="Électronique et câblage du robot JSP" alt="mBot Ranger en configuration Nervous Bird auto-équilibrée, visuel Makeblock" width="1200" height="800" loading="lazy"></div>
             </figure>
             <figure class="gallery-slide" id="slide-essais" data-slide="3">
-              <div class="slide-copy"><span class="slide-number" aria-hidden="true">04</span><h3>Les essais.</h3><span class="illustration-label sr-only">Illustration générée par IA</span></div>
-              <div class="slide-image"><img src="assets/demo/essais.jpg" data-photo="essais" data-custom-alt="Le robot JSP pendant les essais" alt="Robot à roues en essai, illustration générée par IA" width="1200" height="800" loading="lazy"></div>
+              <div class="slide-copy"><span class="slide-number" aria-hidden="true">04</span><h3>Le suivi de ligne.</h3><span class="illustration-label sr-only">Visuel Makeblock</span></div>
+              <div class="slide-image"><img src="assets/makeblock/line-follower.png" data-photo="essais" data-custom-alt="Le robot JSP pendant les essais" alt="Module Me Line Follower à deux capteurs infrarouges, visuel Makeblock" width="1200" height="800" loading="lazy"></div>
             </figure>
           </div>
           <div class="gallery-controls" hidden="">
             <div class="gallery-count mono"><span id="gallery-current">01</span><span class="count-line" aria-hidden="true"></span><span>04</span></div>
-            <div class="gallery-tabs" role="group" aria-label="Choisir une image"><button aria-label="Image 1 : Les détails" aria-controls="slide-details" aria-pressed="true" data-go="0"><span class="sr-only">Les détails</span></button><button aria-label="Image 2 : L’assemblage" aria-controls="slide-atelier" aria-pressed="false" data-go="1"><span class="sr-only">L’assemblage</span></button><button aria-label="Image 3 : L’électronique" aria-controls="slide-electronique" aria-pressed="false" data-go="2"><span class="sr-only">L’électronique</span></button><button aria-label="Image 4 : Les essais" aria-controls="slide-essais" aria-pressed="false" data-go="3"><span class="sr-only">Les essais</span></button></div>
+            <div class="gallery-tabs" role="group" aria-label="Choisir une image"><button aria-label="Image 1 : Land Raider." aria-controls="slide-details" aria-pressed="true" data-go="0"><span class="sr-only">Land Raider.</span></button><button aria-label="Image 2 : Dashing Raptor." aria-controls="slide-atelier" aria-pressed="false" data-go="1"><span class="sr-only">Dashing Raptor.</span></button><button aria-label="Image 3 : Nervous Bird." aria-controls="slide-electronique" aria-pressed="false" data-go="2"><span class="sr-only">Nervous Bird.</span></button><button aria-label="Image 4 : Le suivi de ligne." aria-controls="slide-essais" aria-pressed="false" data-go="3"><span class="sr-only">Le suivi de ligne.</span></button></div>
             <div class="gallery-arrows"><button id="gallery-prev" class="circle-button" aria-label="Image précédente">←</button><button id="gallery-next" class="circle-button" aria-label="Image suivante">→</button></div>
           </div>
           <p class="sr-only" id="gallery-status" aria-live="polite" aria-atomic="true"></p>
         </div>
-        <p class="image-disclosure">Illustrations IA</p>
+        <p class="image-disclosure">Visuels : <a href="https://support.makeblock.com/hc/en-us/articles/1500003839341-About-mBot-Ranger" target="_blank" rel="noopener noreferrer">Makeblock</a></p>
       </div>
     </section>
     <section class="team-section chapter wrap" id="equipe" aria-labelledby="team-title" data-chapter="L’équipe">
@@ -100,8 +155,9 @@
 
   </main>
   <footer class="footer wrap"><small>JSP Robot</small><a href="#projet" aria-label="Retour en haut">↑</a></footer>
-  <nav class="chapter-rail" aria-label="Parcourir les chapitres" hidden=""><a href="#projet" aria-label="Chapitre 1 : Le projet" aria-current="location"><span>01</span></a><a href="#galerie" aria-label="Chapitre 2 : En images"><span>02</span></a><a href="#equipe" aria-label="Chapitre 3 : L’équipe"><span>03</span></a></nav>
-  <div class="presentation-controls" id="presentation-controls" hidden="" role="group" aria-label="Commandes de présentation"><button id="chapter-prev" aria-label="Chapitre précédent">←</button><span class="mono" id="chapter-status" aria-live="polite" aria-atomic="true">01 / 03</span><button id="chapter-next" aria-label="Chapitre suivant">→</button><span class="presentation-divider" aria-hidden="true"></span><button id="fullscreen-toggle" aria-label="Passer en plein écran">Plein écran</button><button id="presentation-exit">Quitter <span aria-hidden="true">×</span></button></div>
+  <nav class="chapter-rail" aria-label="Parcourir les chapitres" hidden=""><a href="#projet" aria-label="Chapitre 1"><span>01</span></a><a href="#seance" aria-label="Chapitre 2"><span>02</span></a><a href="#galerie" aria-label="Chapitre 3"><span>03</span></a><a href="#equipe" aria-label="Chapitre 4"><span>04</span></a></nav>
+  <div class="presentation-controls" id="presentation-controls" hidden="" role="group" aria-label="Commandes de présentation"><button id="chapter-prev" aria-label="Chapitre précédent">←</button><span class="mono" id="chapter-status" aria-live="polite" aria-atomic="true">01 / 04</span><button id="chapter-next" aria-label="Chapitre suivant">→</button><span class="presentation-divider" aria-hidden="true"></span><button id="fullscreen-toggle" aria-label="Passer en plein écran">Plein écran</button><button id="presentation-exit">Quitter <span aria-hidden="true">×</span></button></div>
   <p class="sr-only" id="presentation-hint" aria-live="polite"></p>
+
 
 </body></html>

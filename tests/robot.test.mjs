@@ -3,12 +3,13 @@ import assert from "node:assert/strict";
 import { Box3, Matrix4, PerspectiveCamera, Vector3 } from "three";
 import { createConcept } from "../js/robot-scene.js";
 
-test("rover geometry stays finite and inside the camera through a complete rotation", () => {
+test("tracked Ranger geometry stays finite and inside the camera through a complete rotation", () => {
   const model = createConcept();
   const bounds = new Box3().setFromObject(model);
-  assert.ok(bounds.min.y > -0.02, "Tires rest on the ground");
-  assert.ok(bounds.max.y < 2.1, "Rover has the low profile of the illustrations");
+  assert.ok(bounds.min.y > -0.02, "Tracks rest on the ground");
+  assert.ok(bounds.max.y < 2.1, "Tracked concept stays compact");
   assert.equal(model.userData.wheels.length, 4);
+  assert.equal(model.userData.tracks.length, 2);
   assert.equal(model.userData.head, undefined);
   const instance = new Matrix4(), world = new Matrix4();
   for (const aspect of [0.65, 0.8, 1, 1.4, 1.7]) {

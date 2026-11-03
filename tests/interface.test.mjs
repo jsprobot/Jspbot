@@ -6,6 +6,8 @@ import { JSDOM } from "jsdom";
 
 const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
 const source = await readFile(new URL("../js/app.js", import.meta.url), "utf8");
+const lessonSource = await readFile(new URL("../js/lesson-ui.js", import.meta.url), "utf8");
+const lessonCoreSource = await readFile(new URL("../js/lesson-core.js", import.meta.url), "utf8");
 const tick = () => new Promise((resolve) => setTimeout(resolve, 25));
 
 async function openApp({ reduced = false, photoConfig = {}, denyFullscreen = false } = {}) {
@@ -29,7 +31,7 @@ async function openApp({ reduced = false, photoConfig = {}, denyFullscreen = fal
     observe(target) { this.callback([{ target, isIntersecting: true }]); }
     unobserve() {}
   };
-  const positions = { projet: 100, galerie: 1000, equipe: 2000 };
+  const positions = { projet: 100, seance: 1000, galerie: 2000, equipe: 3000 };
   for (const element of win.document.querySelectorAll(".chapter")) {
     element.getBoundingClientRect = () => ({ top: positions[element.id] - win.scrollY });
     element.scrollIntoView = (options) => {
@@ -68,6 +70,10 @@ async function openApp({ reduced = false, photoConfig = {}, denyFullscreen = fal
   });
   await module.link(() => config);
   await module.evaluate();
+  const coreModule = new SourceTextModule(lessonCoreSource, { context });
+  const lessonModule = new SourceTextModule(lessonSource, { context });
+  await lessonModule.link(() => coreModule);
+  await lessonModule.evaluate();
   await tick();
   const q = (selector) => win.document.querySelector(selector);
   const click = (selector) => q(selector).click();
@@ -152,19 +158,22 @@ test("presentation navigates chapters, leaves gallery arrows independent and res
   app.click(".presentation-toggle");
   assert.equal(app.q(".presentation-toggle").getAttribute("aria-pressed"), "true");
   assert.equal(app.q("#presentation-controls").hidden, false);
-  assert.equal(app.q("#chapter-status").textContent, "01 / 03");
+  assert.equal(app.q("#chapter-status").textContent, "01 / 04");
   assert.equal(app.q("#chapter-prev").disabled, true);
   app.click("#chapter-next");
   await tick();
-  assert.equal(app.q("#chapter-status").textContent, "02 / 03");
+  assert.equal(app.q("#chapter-status").textContent, "02 / 04");
+  app.click("#chapter-next");
+  await tick();
+  assert.equal(app.q("#chapter-status").textContent, "03 / 04");
   app.key("ArrowRight");
   assert.equal(app.q("#gallery-current").textContent, "02");
-  assert.equal(app.q("#chapter-status").textContent, "02 / 03");
+  assert.equal(app.q("#chapter-status").textContent, "03 / 04");
   app.key("ArrowRight", app.q(".gallery"));
   assert.equal(app.q("#gallery-current").textContent, "03");
   app.key("ArrowDown");
   await tick();
-  assert.equal(app.q("#chapter-status").textContent, "03 / 03");
+  assert.equal(app.q("#chapter-status").textContent, "04 / 04");
   assert.equal(app.q("#chapter-next").disabled, true);
   app.key("Escape");
   assert.equal(app.q("#presentation-controls").hidden, true);
@@ -197,11 +206,29 @@ test("3D and custom photo failures retain an honest fallback and working control
   assert.equal(app.q("#robot-viewer").getAttribute("aria-busy"), "false");
   assert.match(app.q("#scene-message").textContent, /indisponible/);
   assert.equal(app.q("#scene-controls").hidden, true);
-  assert.equal(app.q('img[data-photo="details"]').getAttribute("src"), "assets/demo/details.jpg");
+  assert.equal(app.q('img[data-photo="details"]').getAttribute("src"), "assets/makeblock/land-raider.png");
   assert.equal(app.q(".illustration-label").hidden, false);
   app.click("#gallery-next");
   assert.equal(app.q("#gallery-current").textContent, "02");
   app.click(".motion-toggle");
   assert.ok(app.win.document.documentElement.classList.contains("paused"));
   assert.equal(app.q(".motion-toggle").getAttribute("aria-pressed"), "true");
+});
+
+
+test("lesson follows four printed phases while interactive exercises remain usable", async (t) => {
+  const app = await openApp(); t.after(app.close);
+  assert.equal(app.win.document.querySelectorAll(".lesson-phase").length, 4);
+  assert.deepEqual([...app.win.document.querySelectorAll(".phase-duration")].map(n => n.textContent), ["25 min", "35 min", "50 min", "10 min"]);
+  assert.ok(app.q("#seance").textContent.includes("S15–S18"));
+  const initial = app.q("#sim-sprite").getAttribute("transform");
+  app.click("#sim-step");
+  assert.notEqual(app.q("#sim-sprite").getAttribute("transform"), initial);
+  app.click("#sim-reset");
+  assert.equal(app.q("#sim-sprite").getAttribute("transform"), initial);
+  for (const [name, text] of [["left", "gauche"], ["right", "droite"], ["none", "Aucun"], ["both", "tout droit"]]) {
+    app.click('[data-sensor-case="' + name + '"]');
+    assert.ok(app.q("#line-response").textContent.includes(text));
+    assert.equal(app.q('[data-sensor-case="' + name + '"]').getAttribute("aria-pressed"), "true");
+  }
 });

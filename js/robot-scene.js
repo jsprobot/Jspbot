@@ -4,205 +4,103 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { MODEL_CONFIG } from "../model-config.js";
 
-// Original geometry inspired by the project's existing rover illustrations.
-// The scene is a concept, never presented as a scan of the team's real robot.
+// Procedural interpretation of the documented Land Raider configuration.
+// The manufacturer's images remain the reference for the real mBot Ranger.
 export function createConcept() {
   const robot = new THREE.Group();
-  const material = (color, metalness, roughness) => new THREE.MeshStandardMaterial({ color, metalness, roughness });
-  const blue = material(0x3c6296, 0.65, 0.32);
-  const silver = material(0xb6bec2, 0.83, 0.3);
-  const dark = material(0x283137, 0.6, 0.34);
-  const rubber = material(0x202329, 0.02, 0.92);
-  const rim = material(0x343d47, 0.65, 0.35);
-  const green = material(0x396e56, 0.18, 0.6);
-  const red = material(0xb55550, 0.35, 0.4);
-  const black = material(0x151c23, 0.05, 0.6);
-  const gold = material(0xbc9f67, 0.75, 0.36);
-  const led = new THREE.MeshStandardMaterial({ color: 0x72a48a, emissive: 0x447956, emissiveIntensity: 0.7, roughness: 0.4 });
-  const geometryCache = new Map();
-  function cached(key, make) {
-    if (!geometryCache.has(key)) geometryCache.set(key, make());
-    return geometryCache.get(key);
+  const mat = (color, metalness = 0.3, roughness = 0.5) => new THREE.MeshStandardMaterial({color, metalness, roughness});
+  const blue = mat(0x367ea3, 0.7, 0.32), metal = mat(0xaebbc3, 0.82, 0.3);
+  const black = mat(0x172126, 0.1, 0.6), rubber = mat(0x202529, 0.02, 0.9);
+  const pcb = mat(0x284239, 0.25, 0.6), red = mat(0xb75954), yellow = mat(0xc4ae67);
+  const white = mat(0xdfe5dc, 0.25, 0.5);
+  const cache = new Map();
+  function geometry(key, make) { if(!cache.has(key))cache.set(key,make()); return cache.get(key); }
+  function mesh(geo, material, position, parent = robot) { const m = new THREE.Mesh(geo,material);m.position.set(...position);parent.add(m);return m; }
+  function box(w,h,d,r,material,position,parent) { return mesh(geometry(['b',w,h,d,r].join('/'),()=>new RoundedBoxGeometry(w,h,d,2,r)),material,position,parent); }
+  function cylinder(radius,height,material,position,parent,segments=32) { return mesh(geometry(['c',radius,height,segments].join('/'),()=>new THREE.CylinderGeometry(radius,radius,height,segments)),material,position,parent); }
+  function cable(points,material) { const curve=new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(...p)));return mesh(new THREE.TubeGeometry(curve,30,0.018,6,false),material,[0,0,0]); }
+  function capsule(w,h) {
+    const s = new THREE.Shape(), r=h/2, x=w/2;
+    s.moveTo(-x+r,-r);s.lineTo(x-r,-r);s.absarc(x-r,0,r,-Math.PI/2,Math.PI/2,false);s.lineTo(-x+r,r);s.absarc(-x+r,0,r,Math.PI/2,Math.PI*1.5,false);s.closePath();return s;
   }
-  function mesh(geometry, mat, position, parent = robot) {
-    const object = new THREE.Mesh(geometry, mat);
-    object.position.set(...position);
-    parent.add(object);
-    return object;
-  }
-  function box(w, h, d, radius, mat, position, parent) {
-    const key = ["box", w, h, d, radius].join("/");
-    return mesh(cached(key, () => new RoundedBoxGeometry(w, h, d, 2, radius)), mat, position, parent);
-  }
-  function cylinder(radius, height, mat, position, parent, sides = 32) {
-    const key = ["cylinder", radius, height, sides].join("/");
-    return mesh(cached(key, () => new THREE.CylinderGeometry(radius, radius, height, sides)), mat, position, parent);
-  }
-  function wire(points, mat, thickness = 0.016, parent = robot) {
-    const curve = new THREE.CatmullRomCurve3(points.map((point) => new THREE.Vector3(...point)));
-    return mesh(new THREE.TubeGeometry(curve, 32, thickness, 6, false), mat, [0, 0, 0], parent);
-  }
-  function bolt(x, y, z, parent = robot) {
-    cylinder(0.049, 0.026, silver, [x, y, z], parent, 6);
-    box(0.046, 0.003, 0.009, 0.002, dark, [x, y + 0.015, z], parent);
-  }
-
-  // Two structural decks with exposed electronics, rather than a cartoon body.
-  box(2.4, 0.105, 2.65, 0.035, dark, [0, 0.78, 0]);
-  box(2.3, 0.065, 2.55, 0.02, silver, [0, 0.86, 0]);
-  box(2.48, 0.085, 2.72, 0.045, blue, [0, 1.82, 0]);
-  box(2.12, 0.04, 0.08, 0.01, dark, [0, 1.76, 1.27]);
-  [-1.02, 1.02].forEach((x) => {
-    [-1.12, 0, 1.12].forEach((z) => {
-      cylinder(0.046, 0.91, silver, [x, 1.345, z]);
-      cylinder(0.079, 0.06, dark, [x, 1.73, z]);
-      bolt(x, 1.876, z);
-    });
-    box(0.065, 0.34, 2.45, 0.014, silver, [x * 1.12, 0.98, 0]);
-    for (let i = 0; i < 5; i++) {
-      // Dark insets visually articulate the machined side rail.
-      box(0.006, 0.06, 0.24, 0.018, dark, [x * 1.156, 0.99, -0.83 + i * 0.42]);
+  function perforatedPlate(w,h,depth,columns,rows) {
+    const s=new THREE.Shape();s.moveTo(-w/2,-h/2);s.lineTo(w/2,-h/2);s.lineTo(w/2,h/2);s.lineTo(-w/2,h/2);s.closePath();
+    for(let c=0;c<columns;c++)for(let r=0;r<rows;r++){
+      const x=columns===1?0:-w*.4+c*w*.8/(columns-1),y=rows===1?0:-h*.36+r*h*.72/(rows-1);
+      const hole=new THREE.Path();hole.absarc(x,y,0.045,0,Math.PI*2,true);s.holes.push(hole);
     }
-  });
-  [-1, 1].forEach((side) => {
-    box(2.22, 0.32, 0.065, 0.016, silver, [0, 0.96, side * 1.32]);
-    [-0.64, 0, 0.64].forEach((x) => box(0.34, 0.055, 0.009, 0.015, dark, [x, 0.96, side * 1.358]));
-    [-0.93, 0.93].forEach((x) => {
-      const screw = cylinder(0.045, 0.027, dark, [x, 1.03, side * 1.37], robot, 6);
-      screw.rotation.x = Math.PI / 2;
-    });
-  });
-  box(1.56, 0.31, 0.82, 0.035, black, [0, 0.57, -0.1]);
-
-  // Four chunky tires, instanced tread blocks, spokes and metal wheel hubs.
-  const wheels = [];
-  [-1.44, 1.44].forEach((x) => [-0.91, 0.91].forEach((z) => {
-    const wheel = new THREE.Group();
-    wheel.position.set(x, 0.55, z);
-    wheel.rotation.z = Math.PI / 2;
-    robot.add(wheel);
-    cylinder(0.52, 0.37, rubber, [0, 0, 0], wheel, 48);
-    cylinder(0.385, 0.395, rim, [0, 0, 0], wheel, 40);
-    cylinder(0.29, 0.407, black, [0, 0, 0], wheel, 40);
-    const treadGeometry = cached("tread", () => new THREE.BoxGeometry(0.125, 0.115, 0.045));
-    const treads = new THREE.InstancedMesh(treadGeometry, rubber, 78);
-    const temp = new THREE.Object3D();
-    let instance = 0;
-    for (let row = 0; row < 3; row++) {
-      for (let step = 0; step < 26; step++) {
-        const angle = step / 26 * Math.PI * 2 + (row % 2) * 0.11;
-        temp.position.set(Math.cos(angle) * 0.525, (row - 1) * 0.125, Math.sin(angle) * 0.525);
-        temp.rotation.set(0, Math.PI / 2 - angle, 0);
-        temp.updateMatrix();
-        treads.setMatrixAt(instance++, temp.matrix);
-      }
+    return new THREE.ExtrudeGeometry(s,{depth,bevelEnabled:false,curveSegments:6});
+  }
+  const tracks=[], wheels=[];
+  const outer=capsule(2.72,1.02);outer.holes.push(capsule(2.46,.78));
+  const beltGeometry = new THREE.ExtrudeGeometry(outer,{depth:.3,bevelEnabled:false,curveSegments:18});
+  beltGeometry.translate(0,0,-.15);beltGeometry.rotateY(Math.PI/2);
+  const points=capsule(2.72,1.02).getSpacedPoints(72);
+  [-1,1].forEach(side=>{
+    const track=new THREE.Group();track.position.set(side*1.2,.57,0);robot.add(track);tracks.push(track);
+    mesh(beltGeometry,rubber,[0,0,0],track);
+    const treadGeometry=geometry('tread',()=>new THREE.BoxGeometry(.36,.047,.11));
+    const treads=new THREE.InstancedMesh(treadGeometry,rubber,points.length-1),temp=new THREE.Object3D();
+    for(let i=0;i<points.length-1;i++){
+      const p=points[i],n=points[i+1];temp.position.set(0,p.y,-p.x);temp.rotation.set(Math.atan2(-(n.y-p.y),-(n.x-p.x)),0,0);temp.updateMatrix();treads.setMatrixAt(i,temp.matrix);
     }
-    treads.instanceMatrix.needsUpdate = true;
-    wheel.add(treads);
-    [-1, 1].forEach((side) => {
-      const edge = mesh(cached("rim-ring", () => new THREE.TorusGeometry(0.37, 0.018, 6, 40)), dark, [0, side * 0.207, 0], wheel);
-      edge.rotation.x = Math.PI / 2;
-      for (let i = 0; i < 7; i++) {
-        const a = i / 7 * Math.PI * 2;
-        const spoke = box(0.055, 0.025, 0.255, 0.01, rim, [Math.sin(a) * 0.2, side * 0.213, Math.cos(a) * 0.2], wheel);
-        spoke.rotation.y = a;
-      }
-      cylinder(0.12, 0.035, silver, [0, side * 0.228, 0], wheel);
-      cylinder(0.063, 0.045, dark, [0, side * 0.245, 0], wheel, 6);
-      for (let i = 0; i < 5; i++) {
-        const a = i / 5 * Math.PI * 2;
-        cylinder(0.014, 0.018, dark, [Math.sin(a) * 0.085, side * 0.25, Math.cos(a) * 0.085], wheel, 6);
+    treads.instanceMatrix.needsUpdate=true;track.add(treads);
+    [-.83,.83].forEach(z=>{
+      const wheel=new THREE.Group();wheel.position.set(0,0,z);track.add(wheel);wheels.push(wheel);
+      const tire=cylinder(.39,.31,black,[0,0,0],wheel,40);tire.rotation.z=Math.PI/2;
+      const hub=cylinder(.255,.032,black,[side*.174,0,0],wheel,40);hub.rotation.z=Math.PI/2;
+      const cap=cylinder(.092,.045,blue,[side*.2,0,0],wheel);cap.rotation.z=Math.PI/2;
+      const nut=cylinder(.042,.05,metal,[side*.226,0,0],wheel,6);nut.rotation.z=Math.PI/2;
+      for(let i=0;i<8;i++){
+        const a=i*Math.PI/4;
+        const recess=cylinder(.034,.035,rubber,[side*.195,Math.sin(a)*.19,Math.cos(a)*.19],wheel,12);recess.rotation.z=Math.PI/2;
       }
     });
-    const axle = cylinder(0.075, 0.52, silver, [0, 0.55, z]);
-    axle.rotation.z = Math.PI / 2;
-    axle.position.x = x * 0.78;
-    wheels.push(wheel);
-  }));
-
-  // Coil-over suspension and lower control arms.
-  [-1, 1].forEach((side) => [-0.94, 0.94].forEach((z) => {
-    const shock = new THREE.Group();
-    shock.position.set(side * 1.13, 1.04, z);
-    shock.rotation.z = side * -0.16;
-    robot.add(shock);
-    cylinder(0.034, 0.61, silver, [0, 0, 0], shock);
-    cylinder(0.085, 0.2, red, [0, -0.17, 0], shock);
-    const spring = [];
-    for (let i = 0; i <= 100; i++) {
-      const t = i / 100;
-      spring.push([Math.cos(t * Math.PI * 14) * 0.077, -0.16 + t * 0.43, Math.sin(t * Math.PI * 14) * 0.077]);
-    }
-    wire(spring, silver, 0.014, shock);
-    cylinder(0.11, 0.035, dark, [0, 0.28, 0], shock);
-    cylinder(0.1, 0.035, dark, [0, -0.29, 0], shock);
-    const arm = box(0.55, 0.065, 0.1, 0.018, silver, [side * 1.15, 0.55, z - 0.17]);
-    arm.rotation.z = side * -0.16;
-  }));
-
-  // PCB, chips, connectors and restrained red/green/blue wiring.
-  box(1.86, 0.045, 1.56, 0.02, green, [0, 1.16, -0.1]);
-  [-0.78, 0.78].forEach((x) => [-0.7, 0.5].forEach((z) => {
-    cylinder(0.035, 0.23, gold, [x, 1.02, z]);
-    bolt(x, 1.2, z);
-  }));
-  box(0.53, 0.09, 0.55, 0.008, black, [-0.24, 1.23, -0.16]);
-  box(0.27, 0.07, 0.35, 0.008, black, [0.45, 1.22, 0.18]);
-  for (let i = 0; i < 12; i++) {
-    box(0.022, 0.014, 0.7, 0.002, silver, [-0.48 + i * 0.044, 1.29, -0.16]);
-    cylinder(0.013, 0.09, gold, [-0.76 + i * 0.13, 1.24, -0.72]);
+    [-.25,.25].forEach(z=>{const roller=cylinder(.19,.28,black,[0,-.25,z],track);roller.rotation.z=Math.PI/2;});
+    const motor=cylinder(.2,.5,metal,[side*.82,.66,-.37]);motor.rotation.z=Math.PI/2;
+    box(.17,.12,1.85,.015,blue,[side*.91,.88,0]);
+  });
+  box(1.45,.31,1.55,.04,black,[0,.65,-.12]);
+  const deck=mesh(perforatedPlate(1.97,1.72,.065,7,5),blue,[0,.88,-.06]);deck.rotation.x=-Math.PI/2;
+  mesh(perforatedPlate(2.15,.25,.06,8,1),blue,[0,.94,1.01]);
+  mesh(perforatedPlate(1.82,.25,.06,7,1),blue,[0,.94,-1.02]);
+  [-.81,.81].forEach(x=>[-.72,.58].forEach(z=>{cylinder(.045,.26,metal,[x,1.02,z]);cylinder(.063,.03,metal,[x,1.158,z],robot,6);}));
+  box(1.8,.13,1.42,.05,black,[0,1.16,-.18]);
+  box(1.62,.03,1.27,.02,pcb,[0,1.24,-.18]);
+  box(1.87,.025,.045,.01,metal,[0,1.33,-.86]);
+  box(1.87,.025,.045,.01,metal,[0,1.33,.5]);
+  [-.92,.92].forEach(x=>box(.035,.025,1.38,.01,metal,[x,1.33,-.18]));
+  cylinder(.48,.035,black,[0,1.277,-.05],robot,48);
+  const ledMaterials=[red,mat(0x49765f),mat(0x4c6eaa)];
+  for(let i=0;i<12;i++){
+    const a=i*Math.PI/6;box(.075,.025,.075,.012,ledMaterials[i%3],[Math.sin(a)*.405,1.31,-.05+Math.cos(a)*.405]);
   }
-  [-0.45, 0.1, 0.65].forEach((x) => {
-    box(0.28, 0.2, 0.22, 0.014, silver, [x, 1.27, 0.64]);
-    box(0.22, 0.12, 0.009, 0.004, black, [x, 1.27, 0.756]);
-  });
-  cylinder(0.06, 0.22, dark, [0.63, 1.31, -0.53]);
-  cylinder(0.035, 0.25, dark, [0.76, 1.325, -0.53]);
-  box(0.035, 0.035, 0.04, 0.006, led, [-0.71, 1.21, 0.36]);
-  wire([[-0.7, 1.25, -0.6], [-0.98, 1.6, -0.5], [-0.95, 1.55, 0.63], [-0.55, 1.22, 0.57]], red, 0.024);
-  wire([[-0.55, 1.24, -0.6], [-0.86, 1.53, -0.4], [-0.82, 1.48, 0.63], [-0.45, 1.22, 0.57]], black, 0.024);
-  wire([[0.55, 1.23, -0.5], [0.92, 1.55, -0.3], [0.92, 1.45, 0.55], [0.48, 1.4, 1.28]], blue);
-  wire([[0.63, 1.23, -0.5], [1.01, 1.5, -0.24], [1.0, 1.4, 0.63], [0.4, 1.4, 1.28]], red);
-  wire([[-0.7, 1.12, -0.65], [-1.0, 0.96, -0.9], [-1.23, 0.85, -0.9]], red, 0.021);
-  wire([[0.7, 1.12, 0.4], [1.05, 0.95, 0.9], [1.23, 0.8, 0.9]], black, 0.021);
-
-  // Twin ultrasonic transducers: physical sensor meshes, with no animated face.
-  box(1.62, 0.42, 0.12, 0.025, black, [0, 1.48, 1.38]);
-  box(1.7, 0.05, 0.28, 0.015, blue, [0, 1.72, 1.32]);
-  [-0.44, 0.44].forEach((x) => {
-    const sensor = cylinder(0.205, 0.18, silver, [x, 1.49, 1.52], robot, 40);
-    sensor.rotation.x = Math.PI / 2;
-    mesh(cached("sensor-face", () => new THREE.CircleGeometry(0.165, 40)), dark, [x, 1.49, 1.615]);
-    const lip = mesh(cached("sensor-lip", () => new THREE.TorusGeometry(0.184, 0.012, 8, 40)), silver, [x, 1.49, 1.616]);
-    for (let i = 1; i <= 4; i++) {
-      mesh(cached("sensor-mesh-" + i, () => new THREE.RingGeometry(i * 0.033, i * 0.033 + 0.003, 32)),
-        rim, [x, 1.49, 1.618]);
+  cylinder(.11,.037,metal,[0,1.31,-.05]);cylinder(.075,.04,black,[0,1.33,-.05]);
+  [-1,1].forEach(side=>{
+    for(let i=0;i<5;i++){
+      box(.21,.12,.18,.015,black,[side*.71,1.32,-.65+i*.255]);
+      box(.21,.025,.18,.008,i<2?red:yellow,[side*.71,1.39,-.65+i*.255]);
+      box(.008,.055,.115,.002,metal,[side*.819,1.32,-.65+i*.255]);
     }
-    lip.name = "ultrasonic-transducer";
   });
-  [-0.72, 0.72].forEach((x) => {
-    const screw = cylinder(0.026, 0.018, silver, [x, 1.48, 1.452], robot, 6);
-    screw.rotation.x = Math.PI / 2;
+  box(.26,.13,.2,.01,metal,[.35,1.33,-.84]);box(.2,.08,.006,.003,black,[.35,1.33,-.944]);
+  box(.28,.32,.075,.01,blue,[0,1.16,.98]);
+  box(1.17,.38,.08,.015,black,[0,1.46,1.03]);
+  [-.32,.32].forEach(x=>{
+    const sensor=cylinder(.18,.145,metal,[x,1.46,1.145],robot,40);sensor.rotation.x=Math.PI/2;
+    mesh(geometry('sensor-face',()=>new THREE.CircleGeometry(.144,40)),black,[x,1.46,1.224]);
+    mesh(geometry('sensor-rim',()=>new THREE.TorusGeometry(.165,.012,8,40)),metal,[x,1.46,1.227]);
+    for(let i=1;i<=4;i++)mesh(geometry('sensor-mesh-'+i,()=>new THREE.RingGeometry(i*.03,i*.03+.003,32)),metal,[x,1.46,1.228]);
   });
-  if (typeof document !== "undefined") {
-    const labelCanvas = document.createElement("canvas");
-    labelCanvas.width = 512; labelCanvas.height = 128;
-    const context = labelCanvas.getContext("2d");
-    if (context) {
-      context.clearRect(0, 0, 512, 128);
-      context.fillStyle = "#e6edf3";
-      context.textAlign = "center";
-      context.font = "500 68px sans-serif";
-      context.fillText("JSP / 001", 256, 90);
-      const texture = new THREE.CanvasTexture(labelCanvas);
-      texture.colorSpace = THREE.SRGBColorSpace;
-      const label = mesh(new THREE.PlaneGeometry(0.94, 0.235),
-        new THREE.MeshStandardMaterial({ map: texture, transparent: true, roughness: 0.5 }),
-        [0, 1.865, -0.2]);
-      label.rotation.x = -Math.PI / 2;
-    }
-  }
-  robot.userData.wheels = wheels;
+  [-.5,.5].forEach(x=>{const screw=cylinder(.027,.018,yellow,[x,1.46,1.082],robot,6);screw.rotation.x=Math.PI/2;});
+  box(.2,.08,.55,.015,blue,[0,.25,1.12]);
+  box(.52,.045,.25,.012,white,[0,.2,1.37]);
+  [-.16,.16].forEach(x=>{cylinder(.035,.05,black,[x,.16,1.39]);cylinder(.028,.022,white,[x,.16,1.48]);});
+  cable([[-.62,1.31,-.62],[-.8,1.6,-.2],[-.65,1.63,.38],[-.48,1.48,.99]],black);
+  cable([[.63,1.31,-.42],[.88,1.56,.1],[.74,1.5,.57],[.42,1.46,.99]],black);
+  cable([[.7,.78,.5],[.83,.62,1.0],[.37,.35,1.28],[0,.24,1.3]],black);
+  cable([[-.62,1.28,-.6],[-.85,1.17,-.8],[-.8,.79,-.64]],red);
+  robot.userData.wheels=wheels;robot.userData.tracks=tracks;robot.userData.kind='mbot-ranger-concept';
   return robot;
 }
 

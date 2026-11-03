@@ -6,8 +6,9 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "dev": "python3 -m http.server 4173",
-    "check": "node --check js/app.js && node --check js/robot-scene.js && node --check model-config.js",
-    "test": "node --experimental-vm-modules --test tests/*.test.mjs"
+    "check": "node --check js/app.js && node --check js/robot-scene.js && node --check model-config.js && node --check js/lesson-core.js && node --check js/lesson-ui.js",
+    "test": "node --experimental-vm-modules --test tests/*.test.mjs",
+    "build:lesson": "python3 scripts/build-lesson.py"
   },
   "dependencies": {
     "three": "0.180.0"

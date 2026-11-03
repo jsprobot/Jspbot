@@ -1,0 +1,21 @@
+JSP Robot — Devoir pour la séance 2
+Algorithme proposé : deux capteurs infrarouges sur une ligne noire, fond blanc.
+
+Au départ, mémoriser une direction de recherche (gauche par défaut).
+Répéter indéfiniment :
+  Lire le capteur gauche et le capteur droit.
+  Si les deux détectent la ligne :
+    Avancer tout droit et réinitialiser le temps de perte.
+  Sinon, si seul le capteur gauche détecte la ligne :
+    Corriger vers la gauche et mémoriser cette direction.
+  Sinon, si seul le capteur droit détecte la ligne :
+    Corriger vers la droite et mémoriser cette direction.
+  Sinon :
+    Chercher lentement la ligne dans la dernière direction mémorisée.
+    Si la ligne reste perdue pendant 2 secondes : arrêter les moteurs.
+    Repositionner le robot sur la ligne avant de recommencer.
+
+Correction gauche : moteur gauche plus lent que le moteur droit.
+Correction droite : moteur droit plus lent que le moteur gauche.
+La durée de recherche et les vitesses sont des réglages proposés,
+à vérifier lors des essais sur le robot réel.
