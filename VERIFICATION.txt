@@ -21,6 +21,17 @@ Geometry check:
 - Complete rotation at five aspect ratios (0.65, 0.8, 1, 1.4, 1.7)
 - Geometry remains inside the fitted camera with a safety margin
 
-Visual browser verification: not completed in this environment.
-Managed preview daemon is unavailable (sites-previewd mailbox missing).
+Published-site browser verification (desktop Chromium, 1363 x 936):
+PASS New light stylesheet and enhanced application loaded together
+PASS No horizontal overflow on the checked desktop viewport
+PASS Gallery changes to image 2 with the corresponding caption and selected tab
+PASS Presentation enters, switches chapters and exits successfully
+PASS School logo has computed filter: none
+PASS Header, hero and gallery composition inspected on the live page
+
+The browser disables WebGL. The labelled image fallback was verified;
+visual GPU rendering of the new rover was not verified here.
+Mobile visual layout and fullscreen success still need a device check.
+Managed local preview remains unavailable (sites-previewd mailbox missing).
+New desktop screenshot: docs/jsp-robot-rgb-1793716879520.jpg
 Existing docs/preview-*.png files show the previous design.
