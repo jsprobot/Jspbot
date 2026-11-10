@@ -253,3 +253,17 @@ test("lycée blue theme is loaded after the existing styles without moving the l
   assert.equal(dom.window.document.querySelectorAll('img[src="images/logo-lycee.png"]').length, 1);
   dom.window.close();
 });
+
+test("school logo has no CSS tile and favicon matches the blue theme", async () => {
+  const favicon = await readFile(new URL("../assets/favicon.svg", import.meta.url), "utf8");
+  const dom = new JSDOM(html);
+  const icon = dom.window.document.querySelector('link[rel="icon"]');
+  assert.match(icon.href, /favicon\.svg\?v=school-blue-2$/);
+  assert.equal(dom.window.document.querySelector('meta[name="theme-color"]').content, "#0e5fa8");
+  assert.match(lyceeTheme, /mix-blend-mode:\s*multiply/);
+  assert.match(lyceeTheme, /background:\s*transparent/);
+  assert.match(lyceeTheme, /prefers-reduced-motion:\s*reduce/);
+  assert.match(favicon, /#0e5fa8/);
+  assert.ok(dom.window.document.querySelector(".header .school-brand img"));
+  dom.window.close();
+});
