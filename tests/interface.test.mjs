@@ -245,7 +245,7 @@ test("stage 3 shows its two sensors and new downloadable sprite program", async 
   const app = await openApp(); t.after(app.close);
   assert.equal(app.q("#sim-sprite").querySelectorAll("circle").length, 2);
   assert.match(app.q("#sim-readings").textContent, /Gauche.*Droite/);
-  assert.match(app.q("#phase-3 a[download]").href, /S1_suivi_ligne_JSPRobot\\.mblock/);
+  assert.ok(app.q("#phase-3 a[download]").href.includes("S1_suivi_ligne_JSPRobot.mblock"));
   const first = app.q("#sim-sprite").getAttribute("transform");
   for (let i = 0; i < 200; i++) app.click("#sim-step");
   assert.notEqual(app.q("#sim-sprite").getAttribute("transform"), first);
