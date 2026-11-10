@@ -83,17 +83,20 @@ body {
   border-color: #ffffff;
   color: var(--school-blue-dark);
 }
-/* Keep the existing official lycée mark unaltered, but frame it like
-   the school header's white identity tile. */
+/* Keep the original school mark while visually removing its white tile.
+   Multiply makes light PNG backgrounds visually merge with the blue header. */
 .header .school-brand {
   gap: 12px;
 }
 .header .school-brand img {
-  padding: 5px;
-  border: 1px solid rgb(255 255 255 / 80%);
-  border-radius: 6px;
-  background: #ffffff;
-  box-shadow: 0 2px 8px rgb(0 41 86 / 15%);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  mix-blend-mode: multiply;
+  filter: saturate(1.06) contrast(1.08);
+  transition: transform .45s cubic-bezier(.22, 1, .36, 1), filter .45s ease;
 }
 .header .school-brand-name {
   font-weight: 600;
@@ -263,7 +266,7 @@ body {
     box-shadow: none;
   }
   .header .school-brand img {
-    padding: 3px;
+    padding: 0;
   }
 }
 /* Respect print and accessible high-contrast presentations. */
@@ -285,5 +288,104 @@ body {
   .header .menu-toggle,
   .header .presentation-toggle {
     color: CanvasText;
+  }
+}
+
+
+/* Gentle, deliberate UI motion. The existing Pause control suppresses all of
+   these using .paused; the user's reduced-motion setting does so as well. */
+.header .brand-mark i {
+  transition: transform .4s cubic-bezier(.22, 1, .36, 1);
+}
+.header .brand:hover .brand-mark i:nth-child(1) {
+  transform: skewY(-24deg) translateY(-3px);
+}
+.header .brand:hover .brand-mark i:nth-child(2) {
+  transform: skewY(-24deg) translateY(2px);
+}
+.header .brand:hover .brand-mark i:nth-child(3) {
+  transform: skewY(-24deg) translateY(-2px);
+}
+.header .school-brand:hover img {
+  transform: translateY(-2px) scale(1.04);
+  filter: saturate(1.14) contrast(1.09);
+}
+.header .nav-links a {
+  transition: color .25s ease, transform .3s cubic-bezier(.22, 1, .36, 1);
+}
+.header .nav-links a:hover {
+  transform: translateY(-2px);
+}
+.hero .button {
+  transition: background .25s ease, transform .45s cubic-bezier(.22, 1, .36, 1), box-shadow .35s ease;
+}
+.hero .button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px rgb(14 95 168 / 23%);
+}
+.hero .button:active {
+  transform: translateY(-1px);
+}
+.lesson-phase > summary .phase-number {
+  transition: transform .35s cubic-bezier(.22, 1, .36, 1), color .25s ease;
+}
+.lesson-phase > summary:hover .phase-number {
+  transform: translateX(4px);
+}
+.gallery-section .slide-image img {
+  transition: transform .7s cubic-bezier(.22, 1, .36, 1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .gallery-section .gallery-slide.is-active:hover .slide-image img {
+    transform: scale(1.035);
+  }
+}
+@keyframes school-intro {
+  from { opacity: 0; transform: translateY(-9px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes hero-appear {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scene-appear {
+  from { opacity: 0; transform: translateY(12px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes blue-ambient {
+  0%, 100% { opacity: .45; transform: translate(-1%, 0) scale(.99); }
+  50% { opacity: .75; transform: translate(1%, -1%) scale(1.035); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.paused) .header .school-brand {
+    animation: school-intro .7s cubic-bezier(.22, 1, .36, 1) both;
+  }
+  html:not(.paused) .hero .intro,
+  html:not(.paused) .hero .hero-actions,
+  html:not(.paused) .hero .hero-signature {
+    animation: hero-appear .8s cubic-bezier(.22, 1, .36, 1) both;
+  }
+  html:not(.paused) .hero .hero-actions { animation-delay: .12s; }
+  html:not(.paused) .hero .hero-signature { animation-delay: .22s; }
+  html:not(.paused) .hero .robot-stage {
+    animation: scene-appear 1s cubic-bezier(.22, 1, .36, 1) both;
+  }
+  html:not(.paused) .robot-stage::after {
+    content: "";
+    position: absolute;
+    inset: 5% 0;
+    z-index: -2;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 56% 51%, rgb(77 167 223 / 22%) 0%, transparent 65%);
+    animation: blue-ambient 8s ease-in-out infinite;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .header .school-brand img,
+  .gallery-section .slide-image img,
+  .header .nav-links a,
+  .hero .button,
+  .lesson-phase > summary .phase-number {
+    transition: none;
   }
 }
