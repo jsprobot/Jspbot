@@ -159,6 +159,23 @@ i {
   justify-content: space-between;
   gap: 32px;
 }
+.school-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+.school-brand img {
+  display: block;
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+}
+.school-brand-name {
+  font: 600 11px/1.35 var(--display);
+  letter-spacing: -.01em;
+  white-space: nowrap;
+}
 .brand {
   display: inline-flex;
   align-items: center;
@@ -3000,5 +3017,43 @@ html:not(.js-ready) .menu-toggle {
   .sim-settings,
   .lesson-actions {
     display: none;
+  }
+}
+
+/* Keep the lycée logo in the top navigation at every screen width. */
+@media (max-width: 1150px) {
+  .school-brand-name {
+    display: none;
+  }
+}
+@media (max-width: 850px) {
+  .nav {
+    gap: 16px;
+  }
+  .school-brand img {
+    width: 44px;
+    height: 44px;
+  }
+}
+@media (max-width: 640px) {
+  .nav {
+    gap: 9px;
+  }
+  .brand {
+    font-size: 18px;
+    gap: 7px;
+  }
+  .school-brand img {
+    width: 38px;
+    height: 38px;
+  }
+}
+@media (max-width: 360px) {
+  .nav {
+    gap: 7px;
+  }
+  .school-brand img {
+    width: 34px;
+    height: 34px;
   }
 }
