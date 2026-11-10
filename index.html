@@ -8,8 +8,8 @@
   <link rel="preload" href="assets/fonts/space-grotesk.ttf" as="font" type="font/ttf" crossorigin="">
   <link rel="stylesheet" href="styles.css?v=lesson-1">
   <link rel="stylesheet" href="lycee-theme.css?v=blue-20261110">
-  <script type="module" src="js/app.js?v=lesson-1"></script>
-<script type="module" src="js/lesson-ui.js?v=lesson-1"></script></head>
+  <script type="module" src="js/app.js?v=nav-2"></script>
+<script type="module" src="js/lesson-ui.js?v=line-2"></script></head>
 <body>
   <a class="skip" href="#contenu">Aller au contenu</a>
   <div class="reading-progress" aria-hidden="true"></div>
@@ -19,11 +19,11 @@
       <a href="#projet" class="brand" aria-label="JSP Robot, accueil"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>JSP<span class="brand-light">ROBOT</span></span></a>
       <button class="menu-toggle" aria-expanded="false" aria-controls="navigation"><span>Menu</span><span class="menu-icon" aria-hidden="true"></span></button>
       <div class="nav-links" id="navigation"><a href="#projet" aria-current="location">Le projet</a><a href="#seance">La séance</a><a href="#galerie">Le robot</a><a href="#equipe">L’équipe</a></div>
-      <button class="presentation-toggle" aria-pressed="false" aria-controls="presentation-controls"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 9V4h5m6 0h5v5m0 6v5h-5m-6 0H4v-5"></path></svg><span>Présenter</span></button>
-      <div class="school-brand">
+      
+      <a class="school-brand" href="https://lyceejacquesprevert.fr/" aria-label="Site officiel du Lycée professionnel Jacques Prévert">
         <img src="images/logo-lycee.png" alt="Logo du Lycée Professionnel Jacques Prevert" width="52" height="52" decoding="async">
         <span class="school-brand-name" aria-hidden="true">Lycée Professionnel<br>Jacques Prevert</span>
-      </div>
+      </a>
     </nav>
   </header>
   <main id="contenu" tabindex="-1">
@@ -84,20 +84,48 @@
     </details>
 
     <details class="lesson-phase" id="phase-3">
-      <summary><span class="phase-number">03</span><span><strong>Programmer avec mBlock 5</strong><span class="phase-subtitle">Le sprite suit la ligne</span></span><span class="phase-duration">50 min</span><span class="phase-chevron" aria-hidden="true">+</span></summary>
+      <summary><span class="phase-number">03</span><span><strong>Programmer avec mBlock 5</strong><span class="phase-subtitle">Deux capteurs · le sprite suit la piste</span></span><span class="phase-duration">50 min</span><span class="phase-chevron" aria-hidden="true">+</span></summary>
       <div class="phase-body">
-        <div class="lesson-actions"><a class="lesson-button" href="https://ide.mblock.cc/" target="_blank" rel="noopener noreferrer">Ouvrir mBlock 5 ↗</a><a class="lesson-button secondary" href="downloads/S1_suivi_ligne_JSPRobot.mblock" download="">Télécharger le projet ↓</a></div>
-        <details class="lesson-detail"><summary>Prise en main : les quatre zones</summary><p>Utiliser mBlock 5 en ligne ou installer la version PC depuis le site officiel. Pour cet exercice, choisir l’onglet <strong>Sprites / Personnages</strong>.</p><div class="table-scroll"><table><thead><tr><th>Zone</th><th>Emplacement courant</th><th>Rôle</th></tr></thead><tbody><tr><th>Scène</th><td>En haut à gauche.</td><td>Voir le sprite et le fond.</td></tr><tr><th>Palette de blocs</th><td>Colonne des catégories, à côté de la scène.</td><td>Choisir mouvements, capteurs et conditions.</td></tr><tr><th>Zone de programmation</th><td>Grand espace à droite.</td><td>Assembler le programme.</td></tr><tr><th>Sprite</th><td>Onglet Personnages sous la scène.</td><td>Sélectionner le personnage programmé.</td></tr></tbody></table></div><p><a href="https://www.mblock.cc/en-us/download" target="_blank" rel="noopener noreferrer">Télécharger mBlock 5 ↗</a></p></details>
+        <p class="lesson-intro">Le programme utilise deux petits repères de couleur sur le sprite : rouge à gauche et vert à droite. À chaque pas, il vérifie quel repère touche la ligne noire et corrige le cap. Le même principe prépare le suivi de ligne du robot réel, mais le fichier ci-dessous commande uniquement le <strong>sprite de la scène mBlock 5</strong>.</p>
+        <div class="lesson-actions"><a class="lesson-button" href="https://ide.mblock.cc/" target="_blank" rel="noopener noreferrer">Ouvrir mBlock 5 ↗</a><a class="lesson-button secondary" href="downloads/S1_suivi_ligne_JSPRobot.mblock?v=2" download="S1_suivi_ligne_JSPRobot.mblock">Télécharger le projet corrigé ↓</a></div>
         <div class="lesson-workbench">
-          <div class="sim-panel"><span class="sim-title">Essai dans le navigateur</span><svg class="sim-canvas" viewBox="0 0 480 360" role="img" aria-label="Un sprite suit une ligne noire ovale sur fond blanc"><rect width="480" height="360" rx="12" fill="#fff"></rect><ellipse cx="240" cy="180" rx="156" ry="96" stroke="#20292c" stroke-width="14" fill="none"></ellipse><g id="sim-sprite" transform="translate(240 84)"><path d="M13 0 -12 -10 -7 0 -12 10Z" fill="#4c6eaa"></path><circle r="3" fill="#b75954"></circle></g></svg>
-            <div class="sim-controls"><button class="lesson-button" id="sim-run" aria-pressed="false">Tester</button><button class="lesson-button secondary" id="sim-step">Un pas</button><button class="sim-reset" id="sim-reset" aria-label="Recommencer la simulation">↺</button><output id="sim-state" aria-live="off">Avancer</output></div>
-            <div class="sim-settings"><label for="sim-speed">Avancer de <output id="sim-speed-value">2</output> pas<input id="sim-speed" type="range" min="1" max="5" step="1" value="2"></label><label for="sim-turn">Tourner de <output id="sim-turn-value">2</output>°<input id="sim-turn" type="range" min="1" max="15" step="1" value="2"></label></div>
+          <div class="sim-panel"><span class="sim-title">Essai : suivre la ligne noire jusqu’à faire le tour</span>
+            <svg class="sim-canvas" viewBox="0 0 480 360" role="img" aria-label="Simulation d’un sprite avec deux capteurs qui suit une piste ovale noire">
+              <rect width="480" height="360" rx="12" fill="#fff"></rect>
+              <ellipse cx="240" cy="180" rx="156" ry="96" stroke="#000" stroke-width="14" fill="none"></ellipse>
+              <g id="sim-sprite" transform="translate(240 84)">
+                <path d="M-14 -10 L8 0 L-14 10 L-9 0Z" fill="#1267b2" stroke="#084b88" stroke-width="1"></path>
+                <circle cx="12" cy="-7" r="2.6" fill="#ff4b45"></circle>
+                <circle cx="12" cy="7" r="2.6" fill="#4de573"></circle>
+              </g>
+            </svg>
+            <div class="sim-controls"><button class="lesson-button" id="sim-run" aria-pressed="false">Tester</button><button class="lesson-button secondary" id="sim-step">Un pas</button><button class="sim-reset" id="sim-reset" aria-label="Recommencer la simulation">↺</button><output id="sim-state" aria-live="polite">Prêt à suivre la ligne</output></div>
+            <p class="lesson-note" id="sim-readings">Gauche : noir · Droite : noir</p>
+            <div class="sim-settings"><label for="sim-speed">Vitesse : <output id="sim-speed-value">2</output> pas<input id="sim-speed" type="range" min="1" max="4" step="1" value="2"></label><label for="sim-turn">Correction : <output id="sim-turn-value">3</output>°<input id="sim-turn" type="range" min="1" max="8" step="1" value="3"></label></div>
+            <p class="lesson-note">Les repères rouge et vert représentent les détecteurs. Cliquez sur « Tester » pour voir plusieurs tours, ou « Un pas » pour comprendre chaque décision.</p>
           </div>
-          <div class="block-program" aria-label="Algorithme du sprite en français"><div class="code-block event-block">Quand le drapeau vert est cliqué</div><div class="code-block loop-block">Répéter indéfiniment<div class="code-block condition-block">Si le sprite touche le noir<div class="code-block motion-block">Avancer de 2 pas</div><span>Sinon</span><div class="code-block motion-block">Tourner de 2° à droite</div><div class="code-block motion-block">Avancer de 1 pas</div></div></div></div>
+          <div class="block-program" aria-label="Algorithme à deux capteurs en français">
+            <div class="code-block event-block">Quand le drapeau vert est cliqué</div>
+            <div class="code-block loop-block">Répéter indéfiniment
+              <div class="code-block condition-block">Si les deux capteurs voient le noir
+                <div class="code-block motion-block">Avancer de 2 pas</div>
+                <span>Sinon si le capteur gauche voit le noir</span>
+                <div class="code-block motion-block">Tourner de 3° à gauche · avancer</div>
+                <span>Sinon si le capteur droit voit le noir</span>
+                <div class="code-block motion-block">Tourner de 3° à droite · avancer</div>
+                <span>Sinon</span>
+                <div class="code-block motion-block">Chercher dans le dernier sens · avancer de 1 pas</div>
+              </div>
+            </div>
+          </div>
         </div>
-        <details class="lesson-detail"><summary>Les consignes &amp; l’enregistrement</summary><ol><li>Créer un fond avec une ligne noire.</li><li>Programmer le sprite pour qu’il avance en continu.</li><li>Sur la ligne : avancer tout droit.</li><li>Hors de la ligne : tourner légèrement.</li><li>Tester puis ajuster le nombre de pas et l’angle.</li></ol><p>Le fichier contient le fond, le sprite et les blocs « drapeau vert », « répéter indéfiniment », « si… alors… sinon », « avancer » et « tourner ».</p><p>Dans mBlock : <strong>Fichier → Ouvrir depuis votre ordinateur</strong>, puis choisir le projet téléchargé. Le conserver dans le dossier du groupe sous <code>S1_suivi_ligne_JSPRobot.mblock</code>.</p><p class="lesson-note">Ce premier programme recherche toujours à droite. Tester ses limites avant de passer à l’algorithme à deux capteurs de la séance 2. Les valeurs 2 pas et 2° sont des réglages de départ.</p></details>
+        <details class="lesson-detail"><summary>Comment ouvrir et tester le vrai fichier mBlock 5 ?</summary>
+          <ol><li>Ouvrir <strong>mBlock 5</strong>, choisir <strong>Sprites / Personnages</strong>, puis <strong>Fichier → Ouvrir depuis votre ordinateur</strong>.</li><li>Importer <code>S1_suivi_ligne_JSPRobot.mblock</code> et sélectionner le sprite JSP.</li><li>Cliquer sur le drapeau vert. Le sprite doit parcourir la piste noire en tournant à gauche et à droite selon ses deux repères.</li><li>Observer les deux couleurs dans le costume du sprite ; ne pas les recolorer, car le programme les utilise comme capteurs.</li><li>Ajuster la vitesse et les corrections après un essai. Revenir aux valeurs 2 pas et 3° si le sprite perd la piste.</li></ol>
+          <p class="lesson-note"><strong>Important :</strong> ce projet mBlock est un exercice de scène avec capteurs de couleur virtuels, pas un programme à téléverser sur la carte Me Auriga. Pour piloter le mBot Ranger physique, il faudra utiliser les blocs du capteur infrarouge Me Line Follower et les moteurs, selon les ports réellement branchés.</p>
+        </details>
       </div>
     </details>
+
 
     <details class="lesson-phase" id="phase-4">
       <summary><span class="phase-number">04</span><span><strong>Bilan &amp; prochaine séance</strong><span class="phase-subtitle">Quatre situations, une décision</span></span><span class="phase-duration">10 min</span><span class="phase-chevron" aria-hidden="true">+</span></summary>
@@ -156,8 +184,7 @@
   </main>
   <footer class="footer wrap"><small>JSP Robot</small><a href="#projet" aria-label="Retour en haut">↑</a></footer>
   <nav class="chapter-rail" aria-label="Parcourir les chapitres" hidden=""><a href="#projet" aria-label="Chapitre 1"><span>01</span></a><a href="#seance" aria-label="Chapitre 2"><span>02</span></a><a href="#galerie" aria-label="Chapitre 3"><span>03</span></a><a href="#equipe" aria-label="Chapitre 4"><span>04</span></a></nav>
-  <div class="presentation-controls" id="presentation-controls" hidden="" role="group" aria-label="Commandes de présentation"><button id="chapter-prev" aria-label="Chapitre précédent">←</button><span class="mono" id="chapter-status" aria-live="polite" aria-atomic="true">01 / 04</span><button id="chapter-next" aria-label="Chapitre suivant">→</button><span class="presentation-divider" aria-hidden="true"></span><button id="fullscreen-toggle" aria-label="Passer en plein écran">Plein écran</button><button id="presentation-exit">Quitter <span aria-hidden="true">×</span></button></div>
-  <p class="sr-only" id="presentation-hint" aria-live="polite"></p>
+  
 
 
 </body></html>

@@ -135,41 +135,24 @@ document.addEventListener("jsp:motion-change", (event) => {
   slides.forEach((slide) => slide.classList.remove("is-leaving"));
 });
 
+// Keep the chapter position indicator and navigation highlight; presentation mode
+// was removed because this site works better as a normal, scrollable lesson.
 const chapters = [...document.querySelectorAll(".chapter")];
 const rail = document.querySelector(".chapter-rail");
 const chapterLinks = [...document.querySelectorAll(".chapter-rail a, .nav-links a")];
-const presentationButton = document.querySelector(".presentation-toggle");
-const controls = document.querySelector("#presentation-controls");
-const fullscreenButton = document.querySelector("#fullscreen-toggle");
 let currentChapter = 0;
-let presenting = false;
 let scrollPending = false;
-let pendingChapter = null;
-let navigationTimer = 0;
 rail.hidden = false;
-function updateChapterControls() {
-  document.querySelector("#chapter-status").textContent = String(currentChapter + 1).padStart(2, "0") + " / " + String(chapters.length).padStart(2, "0");
-  document.querySelector("#chapter-prev").disabled = currentChapter === 0;
-  document.querySelector("#chapter-next").disabled = currentChapter === chapters.length - 1;
-}
 function updateScroll() {
   const height = root.scrollHeight - innerHeight;
-  document.querySelector(".reading-progress").style.transform = "scaleX(" + (height > 0 ? Math.min(1, Math.max(0, scrollY / height)) : 0) + ")";
+  document.querySelector(".reading-progress").style.transform =
+    "scaleX(" + (height > 0 ? Math.min(1, Math.max(0, scrollY / height)) : 0) + ")";
   const marker = innerHeight * 0.38;
   let active = 0;
-  chapters.forEach((chapter, index) => { if (chapter.getBoundingClientRect().top <= marker) active = index; });
-  if (pendingChapter !== null) {
-    const targetTop = chapters[pendingChapter].getBoundingClientRect().top;
-    const headerHeight = document.querySelector(".header").getBoundingClientRect().height;
-    if (Math.abs(targetTop - headerHeight) < 28) {
-      pendingChapter = null;
-      clearTimeout(navigationTimer);
-    } else active = pendingChapter;
-  }
-  if (active !== currentChapter) {
-    currentChapter = active;
-    updateChapterControls();
-  }
+  chapters.forEach((chapter, index) => {
+    if (chapter.getBoundingClientRect().top <= marker) active = index;
+  });
+  currentChapter = active;
   chapterLinks.forEach((link) => {
     const selected = link.hash === "#" + chapters[active].id;
     if (selected) link.setAttribute("aria-current", "location");
@@ -184,75 +167,12 @@ addEventListener("scroll", () => {
 }, { passive: true });
 addEventListener("resize", updateScroll);
 updateScroll();
-updateChapterControls();
-function goToChapter(index) {
-  currentChapter = Math.max(0, Math.min(chapters.length - 1, index));
-  pendingChapter = currentChapter;
-  clearTimeout(navigationTimer);
-  navigationTimer = setTimeout(() => { pendingChapter = null; updateScroll(); }, 1800);
-  chapters[currentChapter].scrollIntoView({ behavior: reduceMotion() ? "instant" : "smooth", block: "start" });
-  updateChapterControls();
-}
-function cancelChapterNavigation() {
-  pendingChapter = null;
-  clearTimeout(navigationTimer);
-}
-addEventListener("wheel", cancelChapterNavigation, { passive: true });
-addEventListener("touchstart", cancelChapterNavigation, { passive: true });
-addEventListener("scrollend", () => { cancelChapterNavigation(); updateScroll(); });
-function setPresenting(enabled) {
-  const returnChapter = currentChapter;
-  presenting = enabled;
-  root.classList.toggle("presentation-mode", enabled);
-  controls.hidden = !enabled;
-  presentationButton.setAttribute("aria-pressed", String(enabled));
-  presentationButton.querySelector("span").textContent = enabled ? "Quitter" : "Présenter";
-  closeMenu();
-  document.querySelector("#presentation-hint").textContent = enabled
-    ? "Mode présentation. Flèches haut et bas : chapitres. Flèches gauche et droite : images. Échap : quitter."
-    : "Mode présentation terminé.";
-  goToChapter(enabled ? 0 : returnChapter);
-  if (enabled) document.querySelector("#chapter-next").focus({ preventScroll: true });
-  else {
-    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
-    presentationButton.focus({ preventScroll: true });
-  }
-}
-presentationButton.addEventListener("click", () => setPresenting(!presenting));
-document.querySelector("#presentation-exit").addEventListener("click", () => setPresenting(false));
-document.querySelector("#chapter-prev").addEventListener("click", () => goToChapter(currentChapter - 1));
-document.querySelector("#chapter-next").addEventListener("click", () => goToChapter(currentChapter + 1));
-fullscreenButton.hidden = !document.fullscreenEnabled;
-fullscreenButton.addEventListener("click", async () => {
-  try {
-    if (document.fullscreenElement) await document.exitFullscreen();
-    else await root.requestFullscreen();
-  } catch {
-    document.querySelector("#presentation-hint").textContent = "Le plein écran est indisponible. La présentation reste utilisable.";
-  }
-});
-document.addEventListener("fullscreenchange", () => {
-  const active = Boolean(document.fullscreenElement);
-  fullscreenButton.textContent = active ? "Réduire" : "Plein écran";
-  fullscreenButton.setAttribute("aria-label", active ? "Quitter le plein écran" : "Passer en plein écran");
-});
+
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") {
-    if (presenting) setPresenting(false);
-    if (menu.getAttribute("aria-expanded") === "true") { closeMenu(); menu.focus(); }
-    return;
+  if (event.key === "Escape" && menu.getAttribute("aria-expanded") === "true") {
+    closeMenu();
+    menu.focus();
   }
-  if (!presenting || event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey ||
-      event.target.closest("canvas,input,textarea,select,[contenteditable]")) return;
-  if (["ArrowDown", "PageDown"].includes(event.key)) { event.preventDefault(); goToChapter(currentChapter + 1); }
-  else if (["ArrowUp", "PageUp"].includes(event.key)) { event.preventDefault(); goToChapter(currentChapter - 1); }
-  else if (["ArrowLeft", "ArrowRight"].includes(event.key)) {
-    event.preventDefault();
-    const direction = event.key === "ArrowRight" ? 1 : -1;
-    if (chapters[currentChapter].id === "galerie") selectSlide(slideIndex + direction);
-    else goToChapter(currentChapter + direction);
-  } else if (event.key === "Home") { event.preventDefault(); goToChapter(0); }
-  else if (event.key === "End") { event.preventDefault(); goToChapter(chapters.length - 1); }
 });
 
 // A small precision ring complements the native pointer; it never hides it.

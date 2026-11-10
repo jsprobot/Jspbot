@@ -150,44 +150,17 @@ test("reduced motion keeps every feature usable without animation", async (t) =>
   app.click("#gallery-next");
   assert.equal(app.q("#gallery-current").textContent, "02");
   assert.equal(app.animations(), 0);
-  app.click(".presentation-toggle");
-  assert.equal(app.win.lastScrollBehavior, "instant");
+  assert.equal(app.q("#sim-run").disabled, true);
 });
 
-test("presentation navigates chapters, leaves gallery arrows independent and restores focus", async (t) => {
-  const app = await openApp(); t.after(app.close);
-  app.click(".presentation-toggle");
-  assert.equal(app.q(".presentation-toggle").getAttribute("aria-pressed"), "true");
-  assert.equal(app.q("#presentation-controls").hidden, false);
-  assert.equal(app.q("#chapter-status").textContent, "01 / 04");
-  assert.equal(app.q("#chapter-prev").disabled, true);
-  app.click("#chapter-next");
-  await tick();
-  assert.equal(app.q("#chapter-status").textContent, "02 / 04");
-  app.click("#chapter-next");
-  await tick();
-  assert.equal(app.q("#chapter-status").textContent, "03 / 04");
-  app.key("ArrowRight");
-  assert.equal(app.q("#gallery-current").textContent, "02");
-  assert.equal(app.q("#chapter-status").textContent, "03 / 04");
-  app.key("ArrowRight", app.q(".gallery"));
-  assert.equal(app.q("#gallery-current").textContent, "03");
-  app.key("ArrowDown");
-  await tick();
-  assert.equal(app.q("#chapter-status").textContent, "04 / 04");
-  assert.equal(app.q("#chapter-next").disabled, true);
-  app.key("Escape");
-  assert.equal(app.q("#presentation-controls").hidden, true);
-  assert.equal(app.win.document.activeElement, app.q(".presentation-toggle"));
-});
-
-test("fullscreen denial is handled and does not close the presentation", async (t) => {
-  const app = await openApp({ denyFullscreen: true }); t.after(app.close);
-  app.click(".presentation-toggle");
-  app.click("#fullscreen-toggle");
-  await tick();
-  assert.match(app.q("#presentation-hint").textContent, /indisponible/);
-  assert.equal(app.q("#presentation-controls").hidden, false);
+test("school logo is a link to the official lycée and no presentation UI remains", () => {
+  const dom = new JSDOM(html);
+  const link = dom.window.document.querySelector(".header a.school-brand");
+  assert.equal(link.href, "https://lyceejacquesprevert.fr/");
+  assert.ok(link.querySelector('img[src="images/logo-lycee.png"]'));
+  assert.equal(dom.window.document.querySelector(".presentation-toggle"), null);
+  assert.equal(dom.window.document.querySelector("#presentation-controls"), null);
+  dom.window.close();
 });
 
 test("menu closes via Escape, outside click and navigation", async (t) => {
@@ -266,4 +239,15 @@ test("school logo has no CSS tile and favicon matches the blue theme", async () 
   assert.match(favicon, /#0e5fa8/);
   assert.ok(dom.window.document.querySelector(".header .school-brand img"));
   dom.window.close();
+});
+
+test("stage 3 shows its two sensors and new downloadable sprite program", async (t) => {
+  const app = await openApp(); t.after(app.close);
+  assert.equal(app.q("#sim-sprite").querySelectorAll("circle").length, 2);
+  assert.match(app.q("#sim-readings").textContent, /Gauche.*Droite/);
+  assert.ok(app.q("#phase-3 a[download]").href.includes("S1_suivi_ligne_JSPRobot.mblock"));
+  const first = app.q("#sim-sprite").getAttribute("transform");
+  for (let i = 0; i < 200; i++) app.click("#sim-step");
+  assert.notEqual(app.q("#sim-sprite").getAttribute("transform"), first);
+  assert.match(app.q("#sim-state").textContent, /Tout droit|Correction|Recherche/);
 });

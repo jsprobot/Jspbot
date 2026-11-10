@@ -1,20 +1,33 @@
-import { advanceSprite, decideLineAction } from "./lesson-core.js?v=lesson-1";
+import { advanceSprite, decideLineAction, readSpriteSensors } from "./lesson-core.js?v=line-2";
 
 const doc = document;
 const sprite = doc.querySelector("#sim-sprite");
 const run = doc.querySelector("#sim-run");
 const state = doc.querySelector("#sim-state");
+const sensorState = doc.querySelector("#sim-readings");
 const stepInput = doc.querySelector("#sim-speed");
 const turnInput = doc.querySelector("#sim-turn");
-let pose = { x: 0, y: 96, heading: 0 };
+const startPose = () => ({ x: 0, y: 96, heading: 0, lastDirection: "right" });
+let pose = startPose();
 let running = false;
 let frame = 0;
 let previous = 0;
 let accumulated = 0;
+const actionText = {
+  straight: "Tout droit",
+  left: "Correction à gauche",
+  right: "Correction à droite",
+  "search-left": "Recherche à gauche",
+  "search-right": "Recherche à droite",
+};
+
 function paint() {
-  sprite.setAttribute("transform", "translate(" + (240 + pose.x) + " " + (180 - pose.y) + ") rotate(" + pose.heading + ")");
-  state.textContent = pose.onLine === false ? "Tourner légèrement" : "Avancer";
+  sprite.setAttribute("transform", `translate(${(240 + pose.x).toFixed(2)} ${(180 - pose.y).toFixed(2)}) rotate(${(-pose.heading).toFixed(2)})`);
+  const sensors = readSpriteSensors(pose);
+  state.textContent = actionText[pose.action] || "Prêt à suivre la ligne";
+  sensorState.textContent = `Gauche : ${sensors.left ? "noir" : "blanc"} · Droite : ${sensors.right ? "noir" : "blanc"}`;
 }
+
 function takeStep() {
   pose = advanceSprite(pose, Number(stepInput.value), Number(turnInput.value));
   paint();
@@ -32,7 +45,10 @@ function animate(time) {
   if (!running) return;
   accumulated += previous ? Math.min(100, time - previous) : 0;
   previous = time;
-  while (accumulated >= 25) { takeStep(); accumulated -= 25; }
+  while (accumulated >= 25) {
+    takeStep();
+    accumulated -= 25;
+  }
   frame = requestAnimationFrame(animate);
 }
 run.addEventListener("click", () => {
@@ -43,9 +59,7 @@ run.addEventListener("click", () => {
   frame = requestAnimationFrame(animate);
 });
 doc.querySelector("#sim-step").addEventListener("click", () => { stop(); takeStep(); });
-doc.querySelector("#sim-reset").addEventListener("click", () => {
-  stop(); pose = { x: 0, y: 96, heading: 0 }; paint();
-});
+doc.querySelector("#sim-reset").addEventListener("click", () => { stop(); pose = startPose(); paint(); });
 for (const input of [stepInput, turnInput]) {
   input.addEventListener("input", () => {
     doc.querySelector("#" + input.id + "-value").textContent = input.value;
