@@ -247,8 +247,8 @@ test("lycée blue theme is loaded after the existing styles without moving the l
   const dom = new JSDOM(html);
   const stylesheets = [...dom.window.document.querySelectorAll('link[rel="stylesheet"]')].map(el => el.getAttribute("href"));
   assert.ok(stylesheets.indexOf("styles.css?v=lesson-1") < stylesheets.indexOf("lycee-theme.css?v=blue-20261110"));
-  assert.match(lyceeTheme, /--school-blue:\\s*#[0-9a-f]{6}/i);
-  assert.match(lyceeTheme, /\\.header\\s*\\{[^}]*background:\\s*var\\(--school-blue\\)/s);
+  assert.ok(lyceeTheme.includes("--school-blue: #0e5fa8;"));
+  assert.ok(lyceeTheme.includes("background: var(--school-blue);"));
   assert.ok(dom.window.document.querySelector(".header .school-brand img"));
   assert.equal(dom.window.document.querySelectorAll('img[src="images/logo-lycee.png"]').length, 1);
   dom.window.close();
