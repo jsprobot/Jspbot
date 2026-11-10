@@ -389,3 +389,19 @@ body {
     transition: none;
   }
 }
+
+
+/* The lycée identity is a link: make it comfortable to use by mouse and keyboard. */
+.header .school-brand {
+  cursor: pointer;
+  text-decoration: none;
+}
+.header .school-brand:hover .school-brand-name,
+.header .school-brand:focus-visible .school-brand-name {
+  color: #d9efff;
+}
+.header .school-brand:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 5px;
+  border-radius: 3px;
+}
