@@ -5,6 +5,7 @@ import { SourceTextModule, SyntheticModule } from "node:vm";
 import { JSDOM } from "jsdom";
 
 const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
+const lyceeTheme = await readFile(new URL("../lycee-theme.css", import.meta.url), "utf8");
 const source = await readFile(new URL("../js/app.js", import.meta.url), "utf8");
 const lessonSource = await readFile(new URL("../js/lesson-ui.js", import.meta.url), "utf8");
 const lessonCoreSource = await readFile(new URL("../js/lesson-core.js", import.meta.url), "utf8");
@@ -239,5 +240,16 @@ test("lycée logo is displayed in the top navigation rather than below the hero"
   assert.ok(logo, "logo should be inside the top header");
   assert.equal(logo.getAttribute("src"), "images/logo-lycee.png");
   assert.equal(dom.window.document.querySelector("main .school-section"), null);
+  dom.window.close();
+});
+
+test("lycée blue theme is loaded after the existing styles without moving the logo", () => {
+  const dom = new JSDOM(html);
+  const stylesheets = [...dom.window.document.querySelectorAll('link[rel="stylesheet"]')].map(el => el.getAttribute("href"));
+  assert.ok(stylesheets.indexOf("styles.css?v=lesson-1") < stylesheets.indexOf("lycee-theme.css?v=blue-20261110"));
+  assert.match(lyceeTheme, /--school-blue:\\s*#[0-9a-f]{6}/i);
+  assert.match(lyceeTheme, /\\.header\\s*\\{[^}]*background:\\s*var\\(--school-blue\\)/s);
+  assert.ok(dom.window.document.querySelector(".header .school-brand img"));
+  assert.equal(dom.window.document.querySelectorAll('img[src="images/logo-lycee.png"]').length, 1);
   dom.window.close();
 });
