@@ -1,0 +1,289 @@
+/*
+ * JSP Robot — lycée-inspired blue identity.
+ *
+ * Inspired by the institutional blue/white visual language of
+ * https://lyceejacquesprevert.fr/ (Lycée professionnel Jacques Prévert,
+ * Combs-la-Ville). These are project theme colors, not a claim to
+ * reproduce the school's inaccessible private CSS color tokens.
+ *
+ * This layer is loaded after styles.css so that the original layout,
+ * 3D viewer, accessibility features and responsive interactions remain.
+ */
+:root {
+  --paper: #f3f8fe;
+  --white: #ffffff;
+  --ink: #193651;
+  --muted: #526b84;
+  --line: #d6e5f3;
+  --red: #76bbef;
+  --green: #2382c1;
+  --blue: #1267b2;
+  --night: #09365e;
+  --school-blue: #0e5fa8;
+  --school-blue-dark: #084b88;
+  --school-blue-bright: #1e84cf;
+  --school-sky: #e6f3fc;
+}
+body {
+  background: var(--paper);
+}
+::selection {
+  background: #b9dcf7;
+  color: #073b70;
+}
+/* Distinctive school-blue top navigation */
+.header {
+  background: var(--school-blue);
+  border-bottom: 3px solid #55a9e4;
+  box-shadow: 0 4px 20px rgb(7 55 101 / 14%);
+  backdrop-filter: none;
+}
+.header .brand,
+.header .school-brand-name,
+.header .menu-toggle {
+  color: #ffffff;
+}
+.header .brand {
+  font-weight: 700;
+}
+.header .brand-light {
+  color: #d5edff;
+}
+.header .brand-mark {
+  gap: 4px;
+}
+.header .brand-mark i {
+  background: #ffffff;
+  transform: skewY(-24deg);
+}
+.header .brand-mark i:nth-child(2) {
+  background: #a7ddff;
+}
+.header .brand-mark i:nth-child(3) {
+  background: #5cb1ea;
+}
+.header .nav-links a {
+  color: #e1f1ff;
+}
+.header .nav-links a:hover,
+.header .nav-links a[aria-current] {
+  color: #ffffff;
+}
+.header .nav-links a:after {
+  background: #b5e6ff;
+}
+.header .presentation-toggle {
+  color: #ffffff;
+  border-color: rgb(255 255 255 / 50%);
+  background: rgb(255 255 255 / 9%);
+}
+.header .presentation-toggle:hover,
+.header .presentation-toggle[aria-pressed=true] {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: var(--school-blue-dark);
+}
+/* Keep the existing official lycée mark unaltered, but frame it like
+   the school header's white identity tile. */
+.header .school-brand {
+  gap: 12px;
+}
+.header .school-brand img {
+  padding: 5px;
+  border: 1px solid rgb(255 255 255 / 80%);
+  border-radius: 6px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgb(0 41 86 / 15%);
+}
+.header .school-brand-name {
+  font-weight: 600;
+  line-height: 1.35;
+}
+.reading-progress,
+.gallery-section:before {
+  background: linear-gradient(90deg, #a9dcfc, #3e9bdc 50%, #0b5a9d);
+}
+/* Hero: white space, bright institutional blue and subtle sky tones. */
+.hero {
+  background: linear-gradient(130deg, #ffffff 0%, #f6fbff 55%, #e9f5ff 100%);
+  border-bottom: 1px solid var(--line);
+}
+.hero h1 {
+  color: #123f6e;
+}
+.hero h1 em {
+  color: var(--school-blue-bright);
+}
+.hero .intro {
+  color: #4d6f8a;
+}
+.hero .button {
+  background: var(--school-blue);
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgb(14 95 168 / 16%);
+}
+.hero .button:hover {
+  background: var(--school-blue-dark);
+}
+.hero .rgb-line i {
+  background: #a4d8fb;
+}
+.hero .rgb-line i:nth-child(2) {
+  background: #559fd8;
+}
+.hero .rgb-line i:nth-child(3) {
+  background: #145b9c;
+}
+.hero-bottom {
+  border-color: #c6dff1;
+}
+.scroll-arrow,
+.hero .text-link > span {
+  color: var(--school-blue);
+}
+.robot-stage:before {
+  background:
+    radial-gradient(ellipse at 62% 35%, #b6dcf36b, transparent 65%),
+    radial-gradient(ellipse at 35% 70%, #c6eaf785, transparent 60%);
+}
+/* Lesson pages use blue markers, links and control surfaces. */
+.lesson-section {
+  background: linear-gradient(180deg, #f7fbff, #ffffff 65%);
+  border-bottom: 1px solid var(--line);
+}
+.lesson-section h2,
+.team-section h2 {
+  color: #123f6e;
+}
+.lesson-eyebrow,
+.section-kicker > span {
+  color: var(--school-blue);
+}
+.lesson-phase .phase-number,
+.lesson-phase:nth-child(2) .phase-number,
+.lesson-phase:nth-child(3) .phase-number {
+  color: var(--school-blue);
+}
+.lesson-phase > summary {
+  border-radius: 6px;
+  transition: background .2s ease, padding-inline .2s ease;
+}
+.lesson-phase > summary:hover,
+.lesson-phase > summary:focus-visible {
+  background: #e8f5fd;
+}
+.lesson-phase[open] > summary {
+  background: #e5f3fd;
+}
+.lesson-button,
+.phase-body .lesson-button,
+.sim-controls button,
+.sensor-options button {
+  border-radius: 6px;
+}
+.lesson-button:not(.secondary),
+.phase-body .lesson-button:not(.secondary) {
+  background: var(--school-blue);
+  border-color: var(--school-blue);
+  color: #ffffff;
+}
+.lesson-button:not(.secondary):hover,
+.phase-body .lesson-button:not(.secondary):hover {
+  background: var(--school-blue-dark);
+  border-color: var(--school-blue-dark);
+}
+.lesson-summary {
+  border-left-color: var(--school-blue-bright);
+}
+.sim-canvas {
+  background: #f8fcff;
+  border-color: #bdd7ea;
+}
+.lesson-detail > summary:hover,
+.lesson-sources > summary:hover {
+  color: var(--school-blue);
+}
+/* The robot gallery retains the dramatic dark composition, now navy. */
+.gallery-section {
+  background: linear-gradient(145deg, #083e75 0%, #062f58 60%, #072845 100%);
+  color: #ffffff;
+}
+.gallery-section .slide-number {
+  color: #a5d1f2;
+}
+.gallery-section .slide-category {
+  color: #a9defd;
+}
+.gallery-section .slide-copy p,
+.gallery-section .section-aside,
+.gallery-section .muted {
+  color: #cbdff0;
+}
+.gallery-tabs button:after {
+  background: #9bdcff;
+}
+.gallery-section .circle-button:hover {
+  color: #073d74;
+}
+/* Team and ending inherit the same school identity. */
+.team-section {
+  background: #ffffff;
+}
+.member:before {
+  background: #e4f3fd;
+}
+.member:nth-child(n) .member-number {
+  color: var(--school-blue);
+}
+.member-initials,
+.member:nth-child(n) .member-initials {
+  background: #e4f0fa;
+  color: var(--school-blue);
+}
+.closing {
+  background: linear-gradient(130deg, #e2f2fc, #d2e9f9);
+  border-top-color: #c4dff0;
+}
+.closing > p > span {
+  color: var(--school-blue);
+}
+.footer a > span {
+  color: var(--school-blue);
+}
+@media (max-width: 640px) {
+  .header .nav-links {
+    background: var(--school-blue-dark);
+    border-bottom-color: #539fda;
+    box-shadow: 0 14px 24px rgb(2 43 81 / 20%);
+  }
+  .header .nav-links a {
+    color: #ffffff;
+  }
+  html:not(.js-ready) .header .nav-links {
+    box-shadow: none;
+  }
+  .header .school-brand img {
+    padding: 3px;
+  }
+}
+/* Respect print and accessible high-contrast presentations. */
+@media print {
+  .hero,
+  .lesson-section,
+  .team-section,
+  .closing {
+    background: #ffffff !important;
+  }
+}
+@media (forced-colors: active) {
+  .header {
+    border-bottom: 1px solid CanvasText;
+  }
+  .header .nav-links a,
+  .header .brand,
+  .header .school-brand-name,
+  .header .menu-toggle,
+  .header .presentation-toggle {
+    color: CanvasText;
+  }
+}
