@@ -232,3 +232,12 @@ test("lesson follows four printed phases while interactive exercises remain usab
     assert.equal(app.q('[data-sensor-case="' + name + '"]').getAttribute("aria-pressed"), "true");
   }
 });
+
+test("lycée logo is displayed in the top navigation rather than below the hero", () => {
+  const dom = new JSDOM(html);
+  const logo = dom.window.document.querySelector(".header .school-brand img");
+  assert.ok(logo, "logo should be inside the top header");
+  assert.equal(logo.getAttribute("src"), "images/logo-lycee.png");
+  assert.equal(dom.window.document.querySelector("main .school-section"), null);
+  dom.window.close();
+});
